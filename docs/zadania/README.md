@@ -1,3 +1,3 @@
-# Zadania
+# Zadania i Wymagania
 
-Zadania realizowane podczas zajec
+Katalog gromadzi treści i specyfikacje zadań realizowanych w projekcie. Zawiera historię wymagań i opisy funkcjonalności wdrażanych w kolejnych gałęziach.
