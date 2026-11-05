@@ -1,3 +1,3 @@
 # Zadania i Wymagania
 
-Katalog gromadzi treści i specyfikacje pojedynczych zadań (issues/tasków) realizowanych w projekcie. Służy do śledzenia historii wymagań biznesowych oraz opisu funkcjonalności wdrażanych w poszczególnych gałęzi
+Katalog gromadzi treści i specyfikacje zadań realizowanych w projekcie. Zawiera historię wymagań i opisy funkcjonalności wdrażanych w kolejnych gałęziach.
