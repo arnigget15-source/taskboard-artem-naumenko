@@ -1,21 +1,31 @@
 # Dokumentacja projektu
 
-Folder `docs/` służy do przechowywania dokumentacji technicznej i opisowej projektu TaskBoard. Umieszczane tu pliki pomagają uporządkować wymagania, zapisywać decyzje dotyczące budowy aplikacji oraz śledzić wykonane zadania.
+Folder `docs/` będzie służył do przechowywania dokumentacji opisującej projekt TaskBoard i sposób jego rozwijania. W przeciwieństwie do folderów z kodem aplikacji, tutaj będą znajdować się przede wszystkim pliki tekstowe wyjaśniające wymagania, strukturę systemu, sposób działania funkcji i decyzje podjęte podczas realizacji projektu.
 
-## Co znajduje się w dokumentacji?
+Dokumentacja ma ułatwić pracę nad aplikacją oraz pozwolić szybko odnaleźć informacje bez konieczności analizowania całego kodu.
 
-Dokumentacja może zawierać między innymi:
-- opisy funkcji i wymagań aplikacji;
-- informacje o strukturze danych i sposobie działania poszczególnych części systemu;
-- instrukcje dotyczące konfiguracji i uruchamiania;
-- notatki z realizacji kolejnych etapów projektu.
+## Co będzie zawierać dokumentacja?
 
-## Organizacja plików
+W tym folderze mogą znajdować się:
+- opisy funkcji, które aplikacja ma udostępniać użytkownikom;
+- wymagania dotyczące działania formularzy, tablic i zadań;
+- opis struktury danych i powiązań między elementami systemu;
+- instrukcje konfiguracji i uruchamiania poszczególnych części aplikacji;
+- informacje o sposobie komunikacji frontendu z backendem;
+- notatki dotyczące wykonanych etapów i wprowadzonych zmian.
 
-Zadania i materiały związane z ich wykonaniem znajdują się w podfolderze [`zadania/`](zadania/README.md). Dokumenty dotyczące konkretnych zagadnień powinny mieć nazwy opisujące ich zawartość, aby można je było łatwo odnaleźć.
+## Podfolder `zadania/`
 
-## Aktualizacja dokumentacji
+W podfolderze [`zadania/`](zadania/README.md) przechowywane są opisy zadań realizowanych podczas zajęć. Zawierają one zakres wymaganych prac, listę elementów do przygotowania oraz kryteria sprawdzenia wykonania. Dzięki temu można wrócić do wymagań danego etapu i sprawdzić, czy wszystkie punkty zostały zrealizowane.
 
-Dokumentację należy aktualizować razem ze zmianami w projekcie. Jeżeli zmienia się struktura danych, sposób działania funkcji lub instrukcja uruchomienia, odpowiedni opis powinien zostać poprawiony, żeby nie wprowadzał w błąd kolejnych osób pracujących z repozytorium.
+## Jak należy aktualizować dokumentację?
 
-Dokumentacja główna projektu znajduje się w pliku [README.md](../README.md).
+Dokumentacja powinna być zgodna z aktualnym stanem projektu. Jeśli zostanie dodana nowa funkcja, zmieni się struktura bazy lub sposób uruchamiania aplikacji, odpowiedni opis również powinien zostać poprawiony. Nie należy opisywać funkcji jako gotowych, jeśli są dopiero zaplanowane.
+
+Pliki w tym folderze powinny mieć czytelne nazwy, a informacje warto dzielić na sekcje i listy, żeby łatwiej było je przeglądać.
+
+## Powiązane materiały
+
+- [Zadania projektowe](zadania/README.md)
+- [Główne README projektu](../README.md)
+- [Materiały i diagram ERD](../materialy/README.md)
