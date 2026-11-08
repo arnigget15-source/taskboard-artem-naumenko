@@ -1,19 +1,33 @@
-# Materiały do praktyk
+# Materiały
 
-Pliki, z których korzystasz podczas praktyk. Nie zmieniaj ich – kopiuj do swoich folderów, kiedy zadanie tego wymaga.
+W folderze `materialy/` znajdują się dodatkowe pliki do projektu TaskBoard. Pomagają one zaplanować wygląd strony i przygotować bazę danych.
 
-| Plik lub folder | Kiedy się przyda | Do czego |
-| --- | --- | --- |
-| `dane-szablon.md` | TB-1, część 2 (środa po poniedziałku 1) | Szablon opisu danych – skopiuj jako `docs/dane.md` |
-| `erd.md` | Poniedziałek 2 | Diagram bazy danych, według którego piszesz skrypt SQL |
-| `users.csv` | Poniedziałek 2 | Użytkownicy testowi do importu (hasło wszystkich: `Test1234!`) |
-| `makieta/` | Poniedziałek 3 | Zrzuty ekranu widoków, które odwzorowujesz na Bootstrapie |
-| `bugs/` | Poniedziałek 3 | Ćwiczenie z debuggerem: 5 błędów do znalezienia w DevTools |
+## Co znajduje się w folderze?
 
-## Start projektu (poniedziałek 1)
+- [dane-szablon.md](dane-szablon.md) – szablon do opisu danych, które będą przechowywane w aplikacji.
+- [erd.md](erd.md) – diagram pokazujący tabele bazy danych i ich połączenia.
+- [users.csv](users.csv) – przykładowe dane użytkowników do testów.
+- [makieta/](makieta/) – obrazki pokazujące, jak ma wyglądać strona.
+- [bugs/](bugs/) – mały przykład strony z błędami JavaScript do ćwiczenia debugowania.
 
-1. Na stronie tego repozytorium kliknij **Use this template**, potem **Create a new repository**.
-2. Nazwij repozytorium `taskboard-imie-nazwisko`, ustaw je jako **Public** i utwórz.
-3. Sklonuj swoje repozytorium: `git clone <adres>` i otwórz folder w VS Code.
-4. Ustaw ochronę gałęzi `main` i scalanie przez merge commit (instrukcja w prezentacji z poniedziałku 1).
-5. Utwórz branch `feature/tb-1-start` i zacznij zadanie TB-1.
+## Makiety strony
+
+W folderze `makieta/` są projekty ekranów logowania, rejestracji, listy tablic i widoku zadań. Są tam też formularze, filtry i wersja strony na telefon.
+
+Makiety pomogą podczas robienia frontendu, bo pokazują, gdzie powinny znajdować się poszczególne elementy.
+
+## Diagram bazy danych
+
+Plik `erd.md` pokazuje trzy główne tabele: `users`, `boards` i `tasks`. Widać w nim, jakie informacje będą przechowywane i jak tabele będą ze sobą połączone.
+
+## Dane testowe
+
+Plik `users.csv` zawiera przykładowe dane. Można użyć go do ćwiczenia importowania danych do bazy. Nie są to prawdziwe konta.
+
+## Ćwiczenie z błędami
+
+W folderze `bugs/` znajduje się prosta strona z błędami w JavaScript. Można je znaleźć, korzystając z DevTools w przeglądarce.
+
+## Po co są te materiały?
+
+Przed pracą nad daną częścią projektu można zajrzeć do tego folderu i sprawdzić, czy jest już gotowa makieta, diagram albo przykład, który pomoże w wykonaniu zadania.
