@@ -1,41 +1,33 @@
-# Materiały do projektu
+# Materiały
 
-Folder `materialy/` zawiera pliki pomocnicze wykorzystywane podczas planowania i realizacji aplikacji TaskBoard. Nie są to główne pliki kodu strony. Ich zadaniem jest pokazanie, jak aplikacja ma wyglądać, jakie dane powinna przechowywać i na jakich przykładach można sprawdzać poszczególne rozwiązania.
+W folderze `materialy/` znajdują się dodatkowe pliki do projektu TaskBoard. Pomagają one zaplanować wygląd strony i przygotować bazę danych.
 
-Materiały pomagają zachować zgodność pomiędzy wymaganiami, wyglądem interfejsu, logiką backendu i strukturą bazy danych.
+## Co znajduje się w folderze?
 
-## Zawartość folderu
+- [dane-szablon.md](dane-szablon.md) – szablon do opisu danych, które będą przechowywane w aplikacji.
+- [erd.md](erd.md) – diagram pokazujący tabele bazy danych i ich połączenia.
+- [users.csv](users.csv) – przykładowe dane użytkowników do testów.
+- [makieta/](makieta/) – obrazki pokazujące, jak ma wyglądać strona.
+- [bugs/](bugs/) – mały przykład strony z błędami JavaScript do ćwiczenia debugowania.
 
-| Plik lub folder | Do czego służy |
-| --- | --- |
-| [`dane-szablon.md`](dane-szablon.md) | Szablon dokumentu, w którym można opisać, jakie informacje przechowuje aplikacja i jak są one ze sobą powiązane. |
-| [`erd.md`](erd.md) | Diagram ERD przedstawiający tabele użytkowników, tablic i zadań, ich pola oraz relacje. |
-| [`users.csv`](users.csv) | Przykładowe dane użytkowników wykorzystywane podczas ćwiczeń z importowania i testowania danych. |
-| [`makieta/`](makieta/) | Obrazy przedstawiające planowany wygląd ekranów aplikacji. |
-| [`bugs/`](bugs/) | Mała strona demonstracyjna z celowo umieszczonymi błędami JavaScript, przeznaczona do ćwiczenia debugowania. |
+## Makiety strony
 
-## Makiety interfejsu
+W folderze `makieta/` są projekty ekranów logowania, rejestracji, listy tablic i widoku zadań. Są tam też formularze, filtry i wersja strony na telefon.
 
-Folder `makieta/` zawiera obrazy pokazujące poszczególne etapy korzystania z aplikacji. Można tam znaleźć ekran logowania, formularz rejestracji, listę tablic, okno tworzenia nowej tablicy, widok tablicy, filtry, formularz zadania, szczegóły zadania oraz wersję przeznaczoną na telefon.
+Makiety pomogą podczas robienia frontendu, bo pokazują, gdzie powinny znajdować się poszczególne elementy.
 
-Makiety są punktem odniesienia podczas przygotowywania frontendu. Dzięki nim można wcześniej zobaczyć, jakie elementy powinny znaleźć się na stronie i jak użytkownik będzie przechodzić pomiędzy widokami.
+## Diagram bazy danych
 
-## Diagram ERD i opis danych
-
-Plik `erd.md` przedstawia planowaną strukturę bazy danych. Pokazuje trzy główne tabele: `users`, `boards` i `tasks`, a także sposób ich łączenia. Diagram będzie pomocny podczas tworzenia skryptów SQL oraz przy implementacji operacji po stronie backendu.
-
-Plik `dane-szablon.md` pomaga opisać te informacje zwykłym językiem, zanim zostaną one odwzorowane w tabelach bazy danych. Można go skopiować do dokumentacji i uzupełnić zgodnie z wymaganiami zadania.
+Plik `erd.md` pokazuje trzy główne tabele: `users`, `boards` i `tasks`. Widać w nim, jakie informacje będą przechowywane i jak tabele będą ze sobą połączone.
 
 ## Dane testowe
 
-Plik `users.csv` zawiera przykładowe rekordy użytkowników. Może zostać wykorzystany do przećwiczenia importowania danych do bazy i sprawdzenia, czy aplikacja poprawnie odczytuje zapisane informacje. Są to dane przeznaczone wyłącznie do środowiska testowego, a nie prawdziwe konta.
+Plik `users.csv` zawiera przykładowe dane. Można użyć go do ćwiczenia importowania danych do bazy. Nie są to prawdziwe konta.
 
-## Ćwiczenie z debugowania
+## Ćwiczenie z błędami
 
-W folderze `bugs/` znajduje się prosty plik HTML i skrypt JavaScript. Strona wyświetla zadanie polegające na policzeniu wykonanych elementów. W skrypcie umieszczono celowe błędy, które należy odnaleźć za pomocą narzędzi deweloperskich przeglądarki (DevTools). Ćwiczenie pozwala przećwiczyć korzystanie z konsoli, breakpointów i podglądu wartości zmiennych.
+W folderze `bugs/` znajduje się prosta strona z błędami w JavaScript. Można je znaleźć, korzystając z DevTools w przeglądarce.
 
-## Jak korzystać z materiałów?
+## Po co są te materiały?
 
-Przed rozpoczęciem danego etapu warto sprawdzić, czy w tym folderze znajduje się odpowiednia makieta, diagram lub przykładowy plik. Oryginalne materiały najlepiej pozostawić bez zmian, a własne opisy i wyniki pracy zapisywać w odpowiednich folderach projektu, na przykład w `docs/`.
-
-Szczegółowe opisy kolejnych etapów znajdują się w [dokumentacji zadań](../docs/zadania/README.md).
+Przed pracą nad daną częścią projektu można zajrzeć do tego folderu i sprawdzić, czy jest już gotowa makieta, diagram albo przykład, który pomoże w wykonaniu zadania.

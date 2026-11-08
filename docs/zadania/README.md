@@ -1,22 +1,22 @@
 # Zadania projektowe
 
-Folder `docs/zadania/` służy do przechowywania opisów zadań wykonywanych podczas kolejnych etapów pracy nad aplikacją TaskBoard. Każdy plik powinien przedstawiać, co należy przygotować, jakie wymagania trzeba spełnić i po czym można poznać, że zadanie zostało wykonane poprawnie.
+W tym folderze znajdują się opisy zadań związanych z projektem TaskBoard. Dzięki nim można sprawdzić, co trzeba wykonać w danym etapie.
 
-## Co znajduje się w tym folderze?
+## Pliki
 
-- [`TB1zadania.md`](TB1zadania.md) – opis pierwszego etapu pracy. Dotyczy przygotowania struktury repozytorium, plików README, podstawowej konfiguracji GitHub oraz uporządkowania dokumentacji.
-- [`git-cwiczenia.md`](git-cwiczenia.md) – materiał pomocniczy związany z ćwiczeniami dotyczącymi kontroli wersji Git.
+- [TB1zadania.md](TB1zadania.md) – opis pierwszego etapu projektu i rzeczy do przygotowania.
+- [git-cwiczenia.md](git-cwiczenia.md) – ćwiczenia związane z korzystaniem z Gita.
 
-W kolejnych etapach mogą pojawić się tutaj następne pliki opisujące zadania związane z frontendem, backendem, bazą danych, testowaniem i dokumentacją.
+W przyszłości mogą tu dojść kolejne zadania dotyczące frontendu, backendu, bazy danych i testowania.
 
-## Jak korzystać z opisów zadań?
+## Jak korzystać z tych plików?
 
-Przed rozpoczęciem pracy należy przeczytać wymagania i sprawdzić, jakie foldery lub pliki będą potrzebne. Podczas realizacji warto wykonywać mniejsze zmiany i zapisywać je w osobnych commitach z krótkimi, konkretnymi komunikatami.
+Przed rozpoczęciem pracy warto przeczytać wymagania i sprawdzić, jakie pliki trzeba przygotować. Po skończeniu zadania można jeszcze raz przejrzeć listę i upewnić się, że niczego nie brakuje.
 
-Po zakończeniu zadania można przejść przez listę kontrolną i sprawdzić, czy wszystkie wymagane elementy zostały przygotowane. Następnie zmiany można wysłać na odpowiednią gałąź i przedstawić w Pull Request. Automatyczne kontrole repozytorium pomagają wykryć część błędów przed scaleniem zmian.
+Zmiany w projekcie warto zapisywać w commitach z krótkim opisem. Potem można wysłać je na GitHuba i utworzyć Pull Request.
 
 ## Powiązane foldery
 
-- [Dokumentacja](../README.md) – pozostałe opisy projektu.
-- [Materiały](../../materialy/README.md) – diagramy, makiety i dane pomocnicze.
-- [Główne README](../../README.md) – ogólny opis aplikacji i struktury repozytorium.
+- [Dokumentacja](../README.md)
+- [Materiały](../../materialy/README.md)
+- [Główne README](../../README.md)

@@ -1,46 +1,40 @@
 # Baza danych
 
-Folder `database/` będzie przeznaczony na pliki związane z tworzeniem i obsługą bazy danych aplikacji TaskBoard. Baza będzie przechowywać informacje potrzebne do działania systemu: konta użytkowników, utworzone tablice oraz zadania znajdujące się na tych tablicach. Dzięki niej dane nie będą znikać po zamknięciu przeglądarki i będzie można pobierać je ponownie podczas kolejnych sesji.
+Folder `database/` będzie służył do przechowywania plików związanych z bazą danych TaskBoard. Będą w niej zapisane informacje o użytkownikach, tablicach i zadaniach.
 
-## Jakie informacje będą przechowywane?
+## Jakie tabele będą potrzebne?
 
-Zgodnie z diagramem ERD projekt opiera się na trzech podstawowych tabelach:
+Według przygotowanego diagramu ERD baza będzie miała trzy główne tabele:
 
-| Tabela | Zawartość |
+| Tabela | Co będzie przechowywać? |
 | --- | --- |
-| `users` | Konta użytkowników: identyfikator, login, skrót hasła, imię, nazwisko i data utworzenia konta. |
-| `boards` | Tablice: nazwa, opis, identyfikator właściciela, data utworzenia oraz informacje o ewentualnym usunięciu. |
-| `tasks` | Zadania: tytuł, opis, status, priorytet, termin, identyfikator tablicy, opcjonalnie przypisany użytkownik i informacje o utworzeniu lub usunięciu. |
+| `users` | Dane użytkowników, na przykład login i skrót hasła. |
+| `boards` | Nazwy i opisy tablic oraz informację, kto je utworzył. |
+| `tasks` | Zadania, ich opisy, statusy, priorytety i terminy. |
 
-## Relacje między tabelami
+## Jak tabele będą połączone?
 
-Tabele są ze sobą powiązane za pomocą kluczy głównych i obcych:
-- jeden użytkownik może utworzyć kilka tablic;
-- każda tablica ma jednego właściciela;
-- jedna tablica może zawierać wiele zadań;
-- każde zadanie należy do konkretnej tablicy;
-- zadanie może, ale nie musi, mieć przypisanego użytkownika odpowiedzialnego za jego wykonanie.
+- Jeden użytkownik będzie mógł mieć kilka tablic.
+- Każda tablica będzie miała swojego właściciela.
+- W jednej tablicy będzie można umieścić wiele zadań.
+- Zadanie będzie należeć do jednej tablicy.
+- Zadanie będzie można przypisać do wybranego użytkownika.
 
-Takie powiązania pozwolą na przykład pobrać wszystkie tablice danego użytkownika albo wyświetlić zadania znajdujące się na wybranej tablicy. Szczegółowy układ pól i relacji przedstawia [diagram ERD](../materialy/erd.md).
+Dokładny wygląd tabel i połączeń można zobaczyć w pliku [erd.md](../materialy/erd.md).
 
-## Jakie pliki będą znajdować się w folderze?
+## Jakie pliki znajdą się w tym folderze?
 
-W trakcie tworzenia bazy mogą zostać dodane skrypty SQL, na przykład:
-- skrypt tworzący tabele i ich kolumny;
-- definicje kluczy głównych, obcych i ograniczeń;
-- skrypt dodający przykładowe dane testowe;
-- ewentualne kolejne skrypty aktualizujące strukturę bazy.
+W przyszłości będą tu na przykład:
+- pliki SQL tworzące tabele;
+- ustawienia kluczy i połączeń między tabelami;
+- przykładowe dane do testowania bazy.
 
-Nazwy i podział tych plików zostaną ustalone podczas realizacji części bazodanowej. README nie oznacza, że wszystkie wymienione skrypty już istnieją.
+## Dodatkowe informacje
 
-## Zasady przechowywania danych
+W diagramie przewidziano też pola takie jak `isDeleted`, `deletedAt` i `deletedById`. Mają one pozwolić na oznaczenie usuniętych elementów bez natychmiastowego kasowania ich z bazy.
 
-Nazwy tabel w diagramie zapisano małymi literami, a nazwy pól w konwencji `camelCase`. Pola takie jak `ownerId`, `boardId` i `assigneeId` służą do łączenia rekordów z odpowiednimi użytkownikami lub tablicami.
-
-W projekcie przewidziano również mechanizm *soft delete*. Po usunięciu tablicy lub zadania rekord nie musi być od razu kasowany z bazy. Zamiast tego ustawiane są pola `isDeleted`, `deletedAt` i `deletedById`. Dzięki temu aplikacja może ukrywać usunięte elementy, zachowując informację o tym, kiedy i przez kogo zostały usunięte.
-
-Hasła użytkowników będą przechowywane w postaci skrótów, a nie zwykłego tekstu. Przykładowe dane z pliku CSV służą wyłącznie do ćwiczeń i testów.
+Hasła użytkowników będą przechowywane w postaci skrótów, a nie zwykłego tekstu.
 
 ## Aktualny stan
 
-Na obecnym etapie struktura danych jest opisana w pliku [`materialy/erd.md`](../materialy/erd.md). W folderze `database/` nie ma jeszcze gotowych skryptów tworzących bazę. Zostaną one dodane w trakcie kolejnego etapu projektu.
+Na razie struktura bazy jest opisana w diagramie ERD. Gotowe skrypty SQL zostaną dodane później.

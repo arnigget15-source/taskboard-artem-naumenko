@@ -1,46 +1,38 @@
 # Frontend
 
-Folder `frontend/` będzie zawierał kod odpowiedzialny za część aplikacji TaskBoard, którą użytkownik widzi w przeglądarce i z którą bezpośrednio pracuje. To tutaj zostaną przygotowane strony, formularze, przyciski, okna dialogowe, karty zadań, filtry oraz elementy nawigacji. Frontend ma przedstawiać dane w czytelny sposób i umożliwiać wykonywanie operacji bez konieczności kontaktowania się użytkownika bezpośrednio z bazą danych.
+W folderze `frontend/` będzie znajdować się część strony, którą widzi użytkownik. Będą tu pliki odpowiedzialne za wygląd strony i jej obsługę.
 
-## Jakie elementy znajdą się w tym folderze?
+## Co będzie tutaj potrzebne?
 
-W zależności od przyjętej organizacji kodu mogą tu zostać umieszczone:
-- pliki HTML z podstawową strukturą poszczególnych widoków;
-- pliki CSS odpowiadające za kolory, rozmieszczenie elementów, wygląd kart, formularzy i dostosowanie strony do różnych ekranów;
-- skrypty JavaScript obsługujące przyciski, formularze, komunikaty, filtry i pobieranie danych;
-- wspólne elementy interfejsu, takie jak nagłówek, menu, okna modalne i komunikaty o błędach;
-- pliki graficzne i ikony wykorzystywane w interfejsie, jeśli będą potrzebne.
+- pliki HTML – będą tworzyć układ strony;
+- pliki CSS – będą odpowiadać za kolory, rozmiary i rozmieszczenie elementów;
+- pliki JavaScript – będą obsługiwać przyciski, formularze i filtry;
+- obrazy i ikony – jeśli będą potrzebne w wyglądzie strony.
 
-Przykładowo, osobne skrypty mogą w przyszłości obsługiwać logowanie, listę tablic i operacje na zadaniach. Ostateczny podział na pliki zostanie ustalony podczas implementacji.
+## Jakie strony planuję zrobić?
 
-## Planowane widoki aplikacji
+Na podstawie makiet z folderu `materialy/makieta/` frontend będzie zawierał:
 
-Makiety znajdujące się w folderze `materialy/makieta/` pokazują, jak powinny wyglądać najważniejsze ekrany. Na ich podstawie frontend będzie rozwijany w następującej kolejności:
+1. **Logowanie** – formularz do wejścia na konto.
+2. **Rejestrację** – formularz do założenia konta.
+3. **Listę tablic** – miejsce, w którym będą widoczne tablice użytkownika.
+4. **Tworzenie tablicy** – formularz z nazwą i opisem.
+5. **Widok tablicy** – lista zadań przypisanych do danej tablicy.
+6. **Filtrowanie** – możliwość znalezienia zadań według wybranych informacji.
+7. **Dodawanie i edycję zadań** – formularz z tytułem, opisem, statusem i terminem.
+8. **Szczegóły zadania** – więcej informacji o wybranym zadaniu.
+9. **Wersję na telefon** – żeby strona dobrze wyglądała również na mniejszym ekranie.
 
-1. **Logowanie** – formularz, w którym użytkownik podaje dane dostępowe do swojego konta.
-2. **Rejestracja** – formularz tworzenia konta z kontrolą poprawności wprowadzonych informacji.
-3. **Lista tablic** – ekran pokazujący tablice użytkownika oraz umożliwiający przejście do wybranej tablicy.
-4. **Tworzenie tablicy** – okno formularza, w którym można podać nazwę i opis nowej tablicy.
-5. **Widok tablicy** – główny ekran pracy z zadaniami, pokazujący ich tytuły i aktualne statusy.
-6. **Filtrowanie** – kontrolki pozwalające ograniczyć listę zadań, na przykład według statusu lub priorytetu.
-7. **Dodawanie i edycja zadania** – formularz do wpisania tytułu, opisu, terminu, priorytetu i innych dostępnych informacji.
-8. **Szczegóły zadania** – widok z pełnymi informacjami o wybranym zadaniu.
-9. **Widok mobilny** – dostosowanie układu do mniejszych ekranów, aby podstawowe funkcje były wygodne również na telefonie.
+## Jak będzie działać frontend?
 
-## Zachowanie interfejsu
+Po kliknięciu przycisku strona będzie reagować na działanie użytkownika. Na przykład po wybraniu opcji dodania zadania pokaże się formularz. Po jego wypełnieniu dane zostaną wysłane do backendu.
 
-JavaScript będzie odpowiadać za reakcje strony na działania użytkownika. Przykładowo, po kliknięciu przycisku dodawania zadania powinien otworzyć się formularz. Po jego wypełnieniu frontend sprawdzi podstawowe wymagane pola i przekaże dane do backendu. Po otrzymaniu odpowiedzi wyświetli komunikat o powodzeniu albo informację o błędzie.
+Frontend będzie też wyświetlał informacje zwrotne, na przykład czy zadanie zostało dodane, albo czy trzeba poprawić jakieś pole.
 
-Walidacja po stronie przeglądarki ma ułatwiać wypełnianie formularzy, ale nie zastępuje sprawdzania danych po stronie serwera. Ostateczna decyzja o zapisaniu danych będzie należeć do backendu.
+## Połączenie z backendem
 
-## Komunikacja z backendem
-
-Frontend nie powinien łączyć się bezpośrednio z bazą danych. Będzie wysyłać żądania do backendu, na przykład z prośbą o pobranie tablic użytkownika, utworzenie nowego zadania albo zmianę jego statusu. Backend przetworzy żądanie i zwróci wynik, a frontend wykorzysta go do odświeżenia odpowiedniej części strony.
-
-## Technologie
-
-Do budowy tej części przewidziano HTML, CSS, JavaScript i Bootstrap. HTML posłuży do przygotowania struktury widoków, CSS do ich wyglądu, JavaScript do obsługi zachowania strony, a Bootstrap do tworzenia spójnego i responsywnego układu.
+Frontend nie będzie łączyć się bezpośrednio z bazą danych. Będzie wysyłać dane do backendu, a ten zajmie się ich sprawdzeniem i zapisaniem.
 
 ## Aktualny stan
 
-Obecnie folder zawiera dokumentację przeznaczenia frontendu, natomiast właściwe pliki aplikacji będą dodawane w kolejnych etapach. Makiety ekranów można znaleźć w [materiałach projektu](../materialy/README.md).
+Na razie w tym folderze znajduje się opis planowanego frontendu. Pliki HTML, CSS i JavaScript zostaną dodane podczas tworzenia strony.
