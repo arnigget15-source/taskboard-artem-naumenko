@@ -1,69 +1,79 @@
 # TaskBoard
 
-TaskBoard to aplikacja do organizowania pracy w formie tablic i zadań. Użytkownik może tworzyć własne tablice, dodawać do nich zadania, określać ich status i priorytet oraz przypisywać je do wybranych osób. Projekt jest rozwijany etapami w ramach ćwiczeń programistycznych.
+TaskBoard to aplikacja internetowa służąca do planowania pracy i kontrolowania postępów zadań. Jej głównym elementem są tablice, na których można grupować zadania związane z konkretnym projektem lub obszarem pracy. Użytkownik powinien móc sprawdzić, co jest do zrobienia, nad czym aktualnie ktoś pracuje i które zadania zostały już zakończone.
 
-## Główne funkcje
+Projekt jest przygotowywany etapami. Obecne repozytorium zawiera strukturę folderów, dokumentację, diagram bazy danych oraz makiety pokazujące planowany wygląd aplikacji. Kod poszczególnych części będzie uzupełniany w kolejnych etapach.
 
-Docelowo aplikacja będzie umożliwiać:
-- rejestrację i logowanie użytkowników;
-- tworzenie oraz przeglądanie tablic;
-- dodawanie, edytowanie i oznaczanie zadań jako wykonane;
-- ustawianie statusu, priorytetu i terminu zadania;
-- przypisywanie zadań do użytkowników;
-- filtrowanie zadań według wybranych kryteriów.
+## Cel i planowane możliwości aplikacji
+
+TaskBoard ma ułatwiać organizację pracy bez konieczności przechowywania list zadań w wielu osobnych plikach. Informacje będą uporządkowane w tablice, a każda tablica będzie zawierać przypisane do niej zadania.
+
+Na podstawie przygotowanych makiet i struktury danych aplikacja ma obejmować:
+- rejestrację nowych użytkowników i logowanie do konta;
+- wyświetlanie listy tablic należących do zalogowanego użytkownika;
+- tworzenie nowych tablic oraz podawanie ich nazw i opisów;
+- otwieranie tablicy i przeglądanie znajdujących się w niej zadań;
+- dodawanie nowych zadań, wyświetlanie ich szczegółów i edytowanie;
+- ustawianie statusu zadania: do zrobienia, w trakcie lub wykonane;
+- określanie priorytetu i opcjonalnego terminu wykonania;
+- przypisywanie zadania do użytkownika;
+- filtrowanie zadań, aby łatwiej odnaleźć potrzebne informacje.
+
+Są to założenia projektu wynikające z dokumentacji i makiet. Nie wszystkie wymienione funkcje są już zaimplementowane.
 
 ## Technologie i narzędzia
 
-W projekcie wykorzystywane są lub planowane są następujące technologie:
-- **HTML, CSS i JavaScript** – przygotowanie struktury i zachowania interfejsu;
-- **Bootstrap** – budowanie responsywnego układu strony i elementów formularzy;
-- **SQL** – definiowanie struktury bazy danych i praca z zapisanymi informacjami;
-- **Git i GitHub** – kontrola wersji, praca na gałęziach oraz przegląd zmian przez Pull Request;
-- **Visual Studio Code** – edycja plików projektu;
-- **DevTools i Postman** – sprawdzanie działania strony oraz testowanie komunikacji z aplikacją.
+W projekcie przewidziano wykorzystanie następujących technologii i narzędzi:
+- **HTML** – tworzenie struktury stron, formularzy, przycisków i widoków;
+- **CSS** – określanie wyglądu elementów, odstępów, kolorów i układu strony;
+- **JavaScript** – obsługa interakcji, formularzy, filtrów i aktualizacji widoków;
+- **Bootstrap** – pomoc przy budowaniu responsywnego interfejsu i gotowych elementów strony;
+- **SQL** – tworzenie tabel, relacji i wykonywanie operacji na danych;
+- **Git i GitHub** – zapisywanie zmian, praca na gałęziach i przegląd kodu przez Pull Request;
+- **Visual Studio Code** – edycja i organizacja plików projektu;
+- **DevTools i Postman** – sprawdzanie działania interfejsu oraz testowanie komunikacji z backendem.
 
-Szczegółowy wybór technologii po stronie serwera będzie opisany w dokumentacji backendu, gdy zostanie ustalony w kolejnych etapach.
+Dokładne rozwiązania po stronie serwera i sposób połączenia z bazą zostaną opisane po ich ustaleniu i wdrożeniu.
 
-## Wymagane środowisko
+## Struktura repozytorium
 
-Do pracy z repozytorium potrzebne są:
-- komputer z systemem Windows, Linux lub macOS;
-- Git;
-- Visual Studio Code lub inny edytor kodu;
-- przeglądarka internetowa z narzędziami deweloperskimi;
-- środowisko bazy danych obsługujące SQL, gdy rozpoczną się prace nad bazą.
+| Folder lub plik | Przeznaczenie |
+| --- | --- |
+| `frontend/` | Kod części widocznej dla użytkownika: strony, formularze, style i skrypty JavaScript. |
+| `backend/` | Część serwerowa: logika aplikacji, sprawdzanie danych i obsługa żądań z frontendu. |
+| `database/` | Skrypty SQL, definicje tabel, relacje i przykładowe dane bazy. |
+| `docs/` | Dokumentacja techniczna, opisy wymagań i zadania realizowane podczas pracy nad projektem. |
+| `materialy/` | Materiały pomocnicze: makiety ekranów, diagram ERD, szablony i dane testowe. |
+| `.github/` | Skrypty i konfiguracja automatycznych kontroli repozytorium uruchamianych przez GitHub Actions. |
+| `.gitignore` | Lista plików i folderów, których nie należy dodawać do repozytorium. |
 
-Dodatkowe wymagania, takie jak wersja środowiska serwerowego lub sposób instalacji zależności, zostaną dopisane wraz z implementacją tych części aplikacji.
+## Jak będą współpracować części aplikacji?
 
-## Uruchomienie
+Frontend będzie odpowiadać za to, co widzi i obsługuje użytkownik. Po wykonaniu czynności, na przykład dodaniu zadania, przekaże odpowiednie dane do backendu. Backend sprawdzi otrzymane informacje, wykona wymaganą operację i w razie potrzeby zapisze zmiany w bazie danych. Następnie zwróci odpowiedź, na podstawie której frontend zaktualizuje widok.
 
-Na obecnym etapie repozytorium zawiera strukturę projektu, materiały i dokumentację zadania. Pełna instrukcja uruchomienia aplikacji zostanie uzupełniona po przygotowaniu frontendowej i backendowej części systemu.
+Baza danych będzie przechowywać konta użytkowników, tablice i zadania. Dokumentacja w folderze `docs/` oraz materiały w `materialy/` będą pomagać zachować zgodność pomiędzy wyglądem aplikacji, logiką działania i strukturą danych.
 
-Aby pobrać repozytorium na komputer:
+## Uruchomienie projektu
+
+Na obecnym etapie repozytorium zawiera przede wszystkim dokumentację i materiały projektowe. Nie ma jeszcze kompletnej implementacji frontendu i backendu, dlatego pełna instrukcja uruchomienia strony zostanie dodana po przygotowaniu kodu oraz konfiguracji wymaganych narzędzi.
+
+Aby pobrać repozytorium na komputer, użyj poleceń:
 
 ```bash
 git clone <adres-repozytorium>
 cd taskboard-artem-naumenko
 ```
 
-Następnie otwórz folder projektu w Visual Studio Code. Do przeglądania materiałów i dokumentacji nie jest potrzebna dodatkowa instalacja.
-
-## Struktura projektu
-
-| Folder lub plik | Zastosowanie |
-| --- | --- |
-| `frontend/` | Pliki interfejsu użytkownika, widoki, formularze i style. |
-| `backend/` | Logika po stronie serwera oraz obsługa żądań aplikacji. |
-| `database/` | Skrypty SQL i elementy związane ze strukturą bazy danych. |
-| `docs/` | Dokumentacja projektu oraz opisy kolejnych zadań. |
-| `materialy/` | Materiały wejściowe: diagram ERD, przykładowe dane i makiety. |
-| `.github/` | Konfiguracja automatycznych kontroli repozytorium. |
+Następnie otwórz folder w Visual Studio Code. Dokumentację i makiety można przeglądać bez uruchamiania aplikacji.
 
 ## Dokumentacja i materiały
 
-- [Dokumentacja zadań](docs/zadania/README.md)
-- [Materiały do projektu](materialy/README.md)
-- [Opis struktury danych](materialy/erd.md)
+- [Opis frontendu](frontend/README.md)
+- [Opis backendu](backend/README.md)
+- [Opis bazy danych](database/README.md)
+- [Dokumentacja projektu](docs/README.md)
+- [Materiały pomocnicze](materialy/README.md)
+- [Diagram ERD](materialy/erd.md)
 
 ## Autor
 
