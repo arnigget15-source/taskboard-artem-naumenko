@@ -1,19 +1,34 @@
-# Materiały do praktyk
+# Materiały do projektu
 
-Pliki, z których korzystasz podczas praktyk. Nie zmieniaj ich – kopiuj do swoich folderów, kiedy zadanie tego wymaga.
+W tym folderze znajdują się pliki pomocnicze przekazane do realizacji projektu TaskBoard. Zawierają przykładowe dane, opis struktury bazy, makiety interfejsu oraz materiały do ćwiczeń. Warto traktować je jako punkt odniesienia podczas wykonywania zadań i nie modyfikować oryginałów bez wyraźnej potrzeby.
 
-| Plik lub folder | Kiedy się przyda | Do czego |
-| --- | --- | --- |
-| `dane-szablon.md` | TB-1, część 2 (środa po poniedziałku 1) | Szablon opisu danych – skopiuj jako `docs/dane.md` |
-| `erd.md` | Poniedziałek 2 | Diagram bazy danych, według którego piszesz skrypt SQL |
-| `users.csv` | Poniedziałek 2 | Użytkownicy testowi do importu (hasło wszystkich: `Test1234!`) |
-| `makieta/` | Poniedziałek 3 | Zrzuty ekranu widoków, które odwzorowujesz na Bootstrapie |
-| `bugs/` | Poniedziałek 3 | Ćwiczenie z debuggerem: 5 błędów do znalezienia w DevTools |
+## Zawartość folderu
 
-## Start projektu (poniedziałek 1)
+| Plik lub folder | Zastosowanie |
+| --- | --- |
+| [`dane-szablon.md`](dane-szablon.md) | Szablon opisu informacji przechowywanych przez aplikację. Można go skopiować do dokumentacji i uzupełnić własnymi obserwacjami. |
+| [`erd.md`](erd.md) | Diagram ERD przedstawiający tabele, pola i relacje między użytkownikami, tablicami oraz zadaniami. |
+| [`users.csv`](users.csv) | Przykładowy zestaw użytkowników do ćwiczeń z importowaniem danych. Dane logowania należy wykorzystywać wyłącznie w środowisku testowym. |
+| [`makieta/`](makieta/) | Zrzuty ekranów pokazujące planowany wygląd poszczególnych widoków aplikacji. |
+| [`bugs/`](bugs/) | Mały projekt demonstracyjny do ćwiczenia wyszukiwania błędów za pomocą narzędzi deweloperskich przeglądarki. |
 
-1. Na stronie tego repozytorium kliknij **Use this template**, potem **Create a new repository**.
-2. Nazwij repozytorium `taskboard-imie-nazwisko`, ustaw je jako **Public** i utwórz.
-3. Sklonuj swoje repozytorium: `git clone <adres>` i otwórz folder w VS Code.
-4. Ustaw ochronę gałęzi `main` i scalanie przez merge commit (instrukcja w prezentacji z poniedziałku 1).
-5. Utwórz branch `feature/tb-1-start` i zacznij zadanie TB-1.
+## Makiety interfejsu
+
+W folderze `makieta/` znajdują się obrazy przedstawiające między innymi ekran logowania, formularz rejestracji, listę tablic, formularz nowej tablicy, widok tablicy, filtry i szczegóły zadania. Przygotowując frontend, warto porównywać własne widoki z tymi przykładami.
+
+## Diagram i przykładowe dane
+
+Plik `erd.md` opisuje zależności między głównymi elementami systemu. Na jego podstawie można przygotować tabele i klucze w bazie danych. Plik `users.csv` służy do testów importu, dlatego nie należy używać zawartych w nim danych jako prawdziwych kont.
+
+## Rozpoczęcie pracy z repozytorium
+
+Jeżeli repozytorium zostało udostępnione jako szablon, można utworzyć jego własną kopię przez opcję **Use this template** na GitHubie. Następnie należy sklonować utworzone repozytorium i otworzyć folder w edytorze, na przykład Visual Studio Code.
+
+Przykładowe polecenia:
+
+```bash
+git clone <adres-repozytorium>
+cd <nazwa-folderu>
+```
+
+Szczegółowe wymagania dotyczące kolejnych etapów znajdują się w [dokumentacji zadań](../docs/zadania/README.md).
