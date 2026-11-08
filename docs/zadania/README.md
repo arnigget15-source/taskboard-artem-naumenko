@@ -1,16 +1,22 @@
 # Zadania projektowe
 
-W tym folderze znajdują się opisy zadań wykonywanych podczas kolejnych etapów pracy nad TaskBoard. Każdy dokument zawiera zakres prac, najważniejsze wymagania oraz kryteria, według których można sprawdzić, czy zadanie zostało wykonane.
+Folder `docs/zadania/` służy do przechowywania opisów zadań wykonywanych podczas kolejnych etapów pracy nad aplikacją TaskBoard. Każdy plik powinien przedstawiać, co należy przygotować, jakie wymagania trzeba spełnić i po czym można poznać, że zadanie zostało wykonane poprawnie.
 
-## Jak korzystać z tych plików?
+## Co znajduje się w tym folderze?
 
-Przed rozpoczęciem pracy warto przeczytać cały opis zadania i sprawdzić, jakie pliki lub funkcje należy przygotować. Po zakończeniu poszczególne punkty można wykorzystać jako listę kontrolną. Dzięki temu łatwiej zauważyć brakujące elementy przed wysłaniem zmian do repozytorium.
+- [`TB1zadania.md`](TB1zadania.md) – opis pierwszego etapu pracy. Dotyczy przygotowania struktury repozytorium, plików README, podstawowej konfiguracji GitHub oraz uporządkowania dokumentacji.
+- [`git-cwiczenia.md`](git-cwiczenia.md) – materiał pomocniczy związany z ćwiczeniami dotyczącymi kontroli wersji Git.
 
-## Aktualne materiały
+W kolejnych etapach mogą pojawić się tutaj następne pliki opisujące zadania związane z frontendem, backendem, bazą danych, testowaniem i dokumentacją.
 
-- [TB-1 – struktura repozytorium i opis danych](TB1zadania.md) – pierwsze zadanie dotyczące organizacji folderów, dokumentacji i podstawowej pracy z GitHubem.
-- [Ćwiczenia z Git](git-cwiczenia.md) – materiał pomocniczy do ćwiczenia podstawowych operacji związanych z kontrolą wersji.
+## Jak korzystać z opisów zadań?
 
-## Zasady pracy
+Przed rozpoczęciem pracy należy przeczytać wymagania i sprawdzić, jakie foldery lub pliki będą potrzebne. Podczas realizacji warto wykonywać mniejsze zmiany i zapisywać je w osobnych commitach z krótkimi, konkretnymi komunikatami.
 
-Zmiany związane z zadaniami powinny być zapisywane w odpowiednich plikach projektu. Warto wykonywać mniejsze commity z opisowymi komunikatami, a przed scaleniem zmian sprawdzić Pull Request i wynik automatycznych kontroli.
+Po zakończeniu zadania można przejść przez listę kontrolną i sprawdzić, czy wszystkie wymagane elementy zostały przygotowane. Następnie zmiany można wysłać na odpowiednią gałąź i przedstawić w Pull Request. Automatyczne kontrole repozytorium pomagają wykryć część błędów przed scaleniem zmian.
+
+## Powiązane foldery
+
+- [Dokumentacja](../README.md) – pozostałe opisy projektu.
+- [Materiały](../../materialy/README.md) – diagramy, makiety i dane pomocnicze.
+- [Główne README](../../README.md) – ogólny opis aplikacji i struktury repozytorium.
