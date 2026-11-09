@@ -1,6 +1,6 @@
 # Backend
 
-Backend to część aplikacji, która będzie działać po stronie serwera. Będzie odbierać dane ze strony, sprawdzać je i wykonywać odpowiednie działania.
+Backend to część aplikacji, która będzie działać po stronie serwera. Będzie odbierać dane ze strony, sprawdzać je i wykonywać odpowiednie działaniaa.
 
 ## Do czego będzie potrzebny?
 
