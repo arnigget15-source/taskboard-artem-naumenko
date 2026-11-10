@@ -13,24 +13,19 @@ const zadania = [
 function policzWykonane(lista) {
   let licznik = 0;
 
-  // Poprawka: i < lista.length, aby nie odczytywać elementu poza końcem tablicy.
-  for (let i = 0; i < lista.length; i++) {
-    // Poprawka: === porównuje status, zamiast nadpisywać go operatorem =.
-    if (lista[i].status === 'done') {
+  for (let i = 0; i < lista.length; i++) { // Poprawka: < zamiast <=, aby nie wyjść poza zakres tablicy.
+    if (lista[i].status === 'done') { // Poprawka: === porównuje status, a = nadpisywałoby jego wartość.
       licznik++;
     }
   }
 
-  // Poprawka: zwracamy policzoną wartość do funkcji wywołującej.
-  return licznik;
+  return licznik; // Poprawka: zwracamy wynik liczenia.
 }
 
 function pokazPodsumowanie() {
-  // Poprawka: używamy prawidłowej nazwy tablicy — zadania.
-  const wykonane = policzWykonane(zadania);
+  const wykonane = policzWykonane(zadania); // Poprawka: przekazujemy tablicę zadania, a nie pojedynczy element.
   const procent = Math.round((wykonane / zadania.length) * 100);
   document.getElementById('wynik').textContent = `Wykonane: ${wykonane} z ${zadania.length} (${procent}%)`;
 }
 
-// Poprawka: prawidłowa nazwa zdarzenia to 'click'.
-document.getElementById('policz').addEventListener('click', pokazPodsumowanie);
+document.getElementById('policz').addEventListener('click', pokazPodsumowanie); // Poprawka: poprawna nazwa zdarzenia to 'click', nie 'clik'.
