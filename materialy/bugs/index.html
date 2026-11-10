@@ -9,9 +9,16 @@
   <main>
     <h1>Podsumowanie zadań</h1>
     <p>Po kliknięciu przycisku powinien pojawić się napis: „Wykonane: 2 z 5 (40%)”.</p>
+
+    <!-- Id "policz" musi być taki sam jak w getElementById() w pliku bugs.js. -->
     <button type="button" id="policz">Policz wykonane zadania</button>
+
+    <!-- Id "wynik" wskazuje miejsce, w którym JavaScript wyświetla podsumowanie.
+         aria-live="polite" informuje czytniki ekranu o aktualizacji wyniku. -->
     <p id="wynik" aria-live="polite"></p>
   </main>
+
+  <!-- Skrypt jest ładowany po elementach HTML, aby JavaScript mógł je znaleźć w DOM. -->
   <script src="bugs.js"></script>
 </body>
 </html>
