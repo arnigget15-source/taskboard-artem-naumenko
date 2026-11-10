@@ -25,6 +25,7 @@ Dokładny wygląd tabel i połączeń można zobaczyć w pliku [erd.md](../mater
 ## Jakie pliki znajdą się w tym folderze?
 
 W przyszłości będą tu na przykład:
+
 - pliki SQL tworzące tabele;
 - ustawienia kluczy i połączeń między tabelami;
 - przykładowe dane do testowania bazy.
