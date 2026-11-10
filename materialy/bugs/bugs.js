@@ -1,8 +1,6 @@
 // Ćwiczenie z debuggerem (poniedziałek 3).
-// Ten skrypt ma 5 błędów. Otwórz index.html w przeglądarce (np. przez Live Server),
-// włącz DevTools (F12) i znajdź błędy: zakładka Console pokazuje komunikaty,
-// a w zakładce Sources ustawisz breakpoint i podejrzysz wartości zmiennych.
-// Przy każdej poprawce dopisz komentarz, co było nie tak.
+// Skrypt z poprawionymi pięcioma błędami. Otwórz index.html w przeglądarce,
+// włącz DevTools (F12), a następnie kliknij przycisk „Policz wykonane zadania”.
 
 const zadania = [
   { tytul: 'Struktura repozytorium', status: 'done' },
@@ -14,17 +12,25 @@ const zadania = [
 
 function policzWykonane(lista) {
   let licznik = 0;
-  for (let i = 0; i <= lista.length; i++) {
-    if (lista[i].status = 'done') {
+
+  // Poprawka: i < lista.length, aby nie odczytywać elementu poza końcem tablicy.
+  for (let i = 0; i < lista.length; i++) {
+    // Poprawka: === porównuje status, zamiast nadpisywać go operatorem =.
+    if (lista[i].status === 'done') {
       licznik++;
     }
   }
+
+  // Poprawka: zwracamy policzoną wartość do funkcji wywołującej.
+  return licznik;
 }
 
 function pokazPodsumowanie() {
-  const wykonane = policzWykonane(zadanie);
+  // Poprawka: używamy prawidłowej nazwy tablicy — zadania.
+  const wykonane = policzWykonane(zadania);
   const procent = Math.round((wykonane / zadania.length) * 100);
   document.getElementById('wynik').textContent = `Wykonane: ${wykonane} z ${zadania.length} (${procent}%)`;
 }
 
-document.getElementById('policz').addEventListener('clik', pokazPodsumowanie);
+// Poprawka: prawidłowa nazwa zdarzenia to 'click'.
+document.getElementById('policz').addEventListener('click', pokazPodsumowanie);
