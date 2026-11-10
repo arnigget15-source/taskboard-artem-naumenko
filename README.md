@@ -20,6 +20,7 @@ To jest plan funkcji, a nie gotowa lista działających opcji.
 ## Technologie
 
 W projekcie planuję wykorzystać:
+
 - **HTML** – do stworzenia struktury strony;
 - **CSS** – do wyglądu strony;
 - **JavaScript** – do obsługi przycisków, formularzy i innych działań;
