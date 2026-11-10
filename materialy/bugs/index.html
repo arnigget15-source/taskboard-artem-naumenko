@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ćwiczenie z debuggerem – TaskBoard</title>
+
+  <!-- defer uruchamia skrypt po sparsowaniu HTML, więc elementy DOM będą już dostępne. -->
+  <script src="bugs.js" defer></script>
 </head>
 <body>
   <main>
@@ -17,8 +20,5 @@
          aria-live="polite" informuje czytniki ekranu o aktualizacji wyniku. -->
     <p id="wynik" aria-live="polite"></p>
   </main>
-
-  <!-- Skrypt jest ładowany po elementach HTML, aby JavaScript mógł je znaleźć w DOM. -->
-  <script src="bugs.js"></script>
 </body>
 </html>
