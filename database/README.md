@@ -1,41 +1,34 @@
 # Baza danych
 
-Folder `database/` będzie służył do przechowywania plików związanych z bazą danych TaskBoard. Będą w niej zapisane informacje o użytkownikach, tablicach i zadaniach.
+Baza TaskBoard używa MySQL/MariaDB i kodowania `utf8mb4`.
 
-## Jakie tabele będą potrzebne?
+## Tabele i relacje
 
-Według przygotowanego diagramu ERD baza będzie miała trzy główne tabele:
-
-| Tabela | Co będzie przechowywać? |
+| Tabela | Przeznaczenie |
 | --- | --- |
-| `users` | Dane użytkowników, na przykład login i skrót hasła. |
-| `boards` | Nazwy i opisy tablic oraz informację, kto je utworzył. |
-| `tasks` | Zadania, ich opisy, statusy, priorytety i terminy. |
+| `users` | Użytkownicy, unikalny login i hash bcrypt hasła. |
+| `boards` | Tablice i ich właściciele. |
+| `tasks` | Zadania, statusy, priorytety, terminy i przypisania. |
 
-## Jak tabele będą połączone?
+- `boards.ownerId` → `users.id` (jeden użytkownik może mieć wiele tablic).
+- `tasks.boardId` → `boards.id` (jedna tablica ma wiele zadań).
+- `tasks.assigneeId` → `users.id` (opcjonalny przypisany użytkownik).
+- `boards.deletedById` i `tasks.deletedById` → `users.id`.
 
-- Jeden użytkownik będzie mógł mieć kilka tablic.
-- Każda tablica będzie miała swojego właściciela.
-- W jednej tablicy będzie można umieścić wiele zadań.
-- Zadanie będzie należeć do jednej tablicy.
-- Zadanie będzie można przypisać do wybranego użytkownika.
+## Soft delete
 
-Dokładny wygląd tabel i połączeń można zobaczyć w pliku [erd.md](../materialy/erd.md).
+Rekord nie jest fizycznie kasowany. Przy usunięciu ustawiane są
+`isDeleted = 1` i `deletedAt = NOW()`. Aktywne listy filtrują
+`isDeleted = 0`. W API TB-2 `deletedById` pozostaje `NULL`.
 
-## Jakie pliki znajdą się w tym folderze?
+## Import i kopia zapasowa
 
-W przyszłości będą tu na przykład:
+1. Uruchom MySQL w XAMPP i otwórz phpMyAdmin.
+2. Zaimportuj `database/taskboard.sql`. Skrypt tworzy bazę `taskboard`,
+   tabele i 10 testowych zadań (w tym 2 soft delete).
+3. Opcjonalny plik `database/konta.sql` dodaje konta testowe.
+4. Kopia zapasowa znajduje się w `database/backup/taskboard.sql`.
+5. Do testu odtworzenia utwórz `taskboard_test`, zmień nazwę bazy w kopii
+   na `taskboard_test`, zaimportuj i porównaj liczbę rekordów w trzech tabelach.
 
-- pliki SQL tworzące tabele;
-- ustawienia kluczy i połączeń między tabelami;
-- przykładowe dane do testowania bazy.
-
-## Dodatkowe informacje
-
-W diagramie przewidziano też pola takie jak `isDeleted`, `deletedAt` i `deletedById`. Mają one pozwolić na oznaczenie usuniętych elementów bez natychmiastowego kasowania ich z bazy.
-
-Hasła użytkowników będą przechowywane w postaci skrótów, a nie zwykłego tekstu.
-
-## Aktualny stan
-
-Na razie struktura bazy jest opisana w diagramie ERD. Gotowe skrypty SQL zostaną dodane później.
+Dokładny wynik testu importu trzeba sprawdzić lokalnie w phpMyAdmin.
