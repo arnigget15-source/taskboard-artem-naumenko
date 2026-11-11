@@ -44,6 +44,7 @@ Baza danych nazywa się `taskboard` i składa się z trzech tabel:
 | `tasks` | Tytuł, opis, status, priorytet, termin i przypisany użytkownik. |
 
 Relacje:
+
 - `boards.ownerId` wskazuje na `users.id`.
 - `tasks.boardId` wskazuje na `boards.id`.
 - `tasks.assigneeId` wskazuje na `users.id` i może być pusty.
@@ -64,6 +65,7 @@ Usuwanie jest miękkie (soft delete): rekord pozostaje w bazie, a aplikacja usta
 ### Kopia zapasowa i test odtworzenia
 
 Kopia znajduje się w `database/backup/taskboard.sql`. Aby sprawdzić odtworzenie:
+
 1. Utwórz pustą bazę `taskboard_test` w phpMyAdmin.
 2. W kopii zmień nazwę bazy w instrukcjach `CREATE DATABASE` i `USE`
    z `taskboard` na `taskboard_test`.
@@ -85,6 +87,7 @@ SELECT 'tasks', COUNT(*) FROM taskboard_test.tasks;
 ```
 
 Oczekiwana liczba po imporcie przykładowego skryptu:
+
 - `users`: 5;
 - `boards`: 2;
 - `tasks`: 10 (w tym 2 miękko usunięte).
@@ -96,6 +99,7 @@ wykonać w phpMyAdmin.
 
 Backend uruchamia się poleceniem `npm start` w folderze `backend/`.
 Dostępne trasy etapu TB-2:
+
 - `GET /api/boards`;
 - `GET /api/boards/:boardId/tasks`;
 - `GET /api/tasks/:id`;
