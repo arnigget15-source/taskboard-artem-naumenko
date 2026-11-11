@@ -14,7 +14,31 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// GET /api/boards/:boardId/tasks — lista aktywnych zadań tablicy.
+router.get('/:boardId/tasks', async (req, res, next) => {
+  try {
+    const boardId = Number(req.params.boardId);
+    if (!Number.isInteger(boardId) || boardId < 1) {
+      return res.status(404).json({ error: 'Tablica nie istnieje' });
+    }
 
+    const [boards] = await pool.query(
+      'SELECT id FROM boards WHERE id = ? AND isDeleted = 0',
+      [boardId]
+    );
+    if (boards.length === 0) {
+      return res.status(404).json({ error: 'Tablica nie istnieje' });
+    }
+
+    const [rows] = await pool.query(
+      'SELECT id, title, description, status, priority, deadline, boardId, assigneeId, createdAt FROM tasks WHERE boardId = ? AND isDeleted = 0',
+      [boardId]
+    );
+    res.json(rows);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.post('/', async (req, res, next) => {
   try {
