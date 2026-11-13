@@ -18,12 +18,12 @@ Baza TaskBoard używa MySQL/MariaDB i kodowania `utf8mb4`.
 ## Konfiguracja połączenia z XAMPP
 
 1. W głównym katalogu projektu skopiuj `.env.example` do pliku `.env`.
-2. Dla standardowego XAMPP оставь значения: `DB_HOST=localhost`, `DB_PORT=3306`, `DB_USER=root`, pustой `DB_PASSWORD`, `DB_NAME=taskboard`.
-3. Если у пользователя MySQL установлен пароль, укажи его только в локальном `.env`.
-4. Файл `.env` исключён из Git и не должен отправляться в GitHub.
-5. Если MySQL настроен иначе, измени соответствующие значения в `.env`.
+2. Dla standardowego XAMPP pozostaw wartości: `DB_HOST=localhost`, `DB_PORT=3306`, `DB_USER=root`, puste `DB_PASSWORD`, `DB_NAME=taskboard`.
+3. Jeśli użytkownik MySQL ma ustawione hasło, wpisz je wyłącznie w lokalnym pliku `.env`.
+4. Plik `.env` jest wykluczony z Git i nie powinien być wysyłany do GitHuba.
+5. Jeśli MySQL jest skonfigurowany inaczej, zmień odpowiednie wartości w pliku `.env`.
 
-Файл `backend/db.js` использует те же значения по умолчанию, поэтому локальный XAMPP обычно работает даже без созданного `.env`.
+Plik `backend/db.js` używa tych samych wartości domyślnych, więc lokalny XAMPP zwykle działa nawet bez utworzonego pliku `.env`.
 
 ## Soft delete
 
