@@ -15,6 +15,16 @@ Baza TaskBoard używa MySQL/MariaDB i kodowania `utf8mb4`.
 - `tasks.assigneeId` → `users.id` (opcjonalny przypisany użytkownik).
 - `boards.deletedById` i `tasks.deletedById` → `users.id`.
 
+## Konfiguracja połączenia z XAMPP
+
+1. W głównym katalogu projektu skopiuj `.env.example` do pliku `.env`.
+2. Dla standardowego XAMPP оставь значения: `DB_HOST=localhost`, `DB_PORT=3306`, `DB_USER=root`, pustой `DB_PASSWORD`, `DB_NAME=taskboard`.
+3. Если у пользователя MySQL установлен пароль, укажи его только в локальном `.env`.
+4. Файл `.env` исключён из Git и не должен отправляться в GitHub.
+5. Если MySQL настроен иначе, измени соответствующие значения в `.env`.
+
+Файл `backend/db.js` использует те же значения по умолчанию, поэтому локальный XAMPP обычно работает даже без созданного `.env`.
+
 ## Soft delete
 
 Rekord nie jest fizycznie kasowany. Przy usunięciu ustawiane są
@@ -23,7 +33,7 @@ Rekord nie jest fizycznie kasowany. Przy usunięciu ustawiane są
 
 ## Import i kopia zapasowa
 
-1. Uruchom MySQL w XAMPP i otwórz phpMyAdmin.
+1. Uruchom MySQL w XAMPP i otwórz `http://localhost/phpmyadmin/`.
 2. Zaimportuj `database/taskboard.sql`. Skrypt tworzy bazę `taskboard`,
    tabele i 10 testowych zadań (w tym 2 soft delete).
 3. Opcjonalny plik `database/konta.sql` dodaje konta testowe.
