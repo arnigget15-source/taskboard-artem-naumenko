@@ -1,6 +1,10 @@
 -- TaskBoard: struktura bazy danych i dane testowe
+-- UWAGA: ten skrypt usuwa CAŁĄ bazę taskboard i tworzy ją od nowa.
+-- Zrób kopię zapasową przed importem, jeśli chcesz zachować istniejące dane.
 -- Importuj w phpMyAdmin do MySQL/MariaDB (XAMPP).
-CREATE DATABASE IF NOT EXISTS taskboard
+DROP DATABASE IF EXISTS taskboard;
+
+CREATE DATABASE taskboard
   CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE taskboard;
 
@@ -60,7 +64,7 @@ CREATE TABLE tasks (
   CONSTRAINT fk_tasks_deletedBy FOREIGN KEY (deletedById) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Testowe konta; hasła przechowywane wyłącznie jako hash bcrypt.
+-- Testowe konta aplikacji; hasła przechowywane wyłącznie jako hash bcrypt.
 INSERT INTO users (id, login, passwordHash, firstName, lastName) VALUES
 (1, 'anna.nowak', '$2a$10$qCgFwKm4Qiu60z3cTqCvz.DZUvPNVnkJQjMagc4wtx24LiYjsF./y', 'Anna', 'Nowak'),
 (2, 'jan.kowalski', '$2a$10$qCgFwKm4Qiu60z3cTqCvz.DZUvPNVnkJQjMagc4wtx24LiYjsF./y', 'Jan', 'Kowalski'),
@@ -73,6 +77,7 @@ INSERT INTO boards (id, name, description, ownerId, isDeleted, deletedAt, delete
 (2, 'Organizacja praktyk', 'Zadania związane z praktykami', 2, 0, NULL, NULL);
 
 -- 10 zadań testowych: różne statusy i priorytety; dwa rekordy soft delete.
+-- Zadanie 9 usunięto 45 dni temu, zadanie 10 - obecnie.
 INSERT INTO tasks (id, title, description, status, priority, deadline, boardId, assigneeId, isDeleted, deletedAt) VALUES
 (1, 'Przygotować makietę', 'Uzupełnić widok tablicy', 'todo', 'high', '2026-11-14', 1, 1, 0, NULL),
 (2, 'Opisać API', 'Dodać opis tras', 'in_progress', 'medium', '2026-11-15', 1, 2, 0, NULL),
@@ -82,7 +87,7 @@ INSERT INTO tasks (id, title, description, status, priority, deadline, boardId, 
 (6, 'Dodać walidację', NULL, 'todo', 'medium', '2026-11-16', 2, 2, 0, NULL),
 (7, 'Przetestować endpointy', NULL, 'done', 'high', '2026-11-10', 2, 3, 0, NULL),
 (8, 'Zaktualizować dokumentację', NULL, 'in_progress', 'low', NULL, 2, 4, 0, NULL),
-(9, 'Stare zadanie testowe', NULL, 'done', 'medium', NULL, 1, 5, 1, CURRENT_TIMESTAMP),
+(9, 'Stare zadanie testowe', NULL, 'done', 'medium', NULL, 1, 5, 1, DATE_SUB(NOW(), INTERVAL 45 DAY)),
 (10, 'Nieaktualny wpis', NULL, 'todo', 'low', NULL, 2, NULL, 1, CURRENT_TIMESTAMP);
 
 ALTER TABLE users AUTO_INCREMENT = 6;

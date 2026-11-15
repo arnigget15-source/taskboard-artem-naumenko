@@ -59,8 +59,9 @@ Usuwanie jest miękkie (soft delete): rekord pozostaje w bazie, a aplikacja usta
 1. Uruchom MySQL w XAMPP Control Panel.
 2. Otwórz `http://localhost/phpmyadmin/`.
 3. Wybierz Import i wskaż plik `database/taskboard.sql`.
-4. Plik tworzy bazę `taskboard`, tabele i przykładowe rekordy.
-5. Plik `database/konta.sql` zawiera dodatkowe konta testowe. Importuj go po utworzeniu tabeli `users`; duplikaty loginów nie tworzą nowych rekordów.
+4. Plik najpierw wykonuje `DROP DATABASE IF EXISTS taskboard`, więc usuwa całą poprzednią bazę, a następnie tworzy ją ponownie. Przed importem wykonaj kopię zapasową, jeśli chcesz zachować dane.
+5. `database/konta.sql` zawiera użytkowników aplikacji w tabeli `users`.
+6. `database/db_users.sql` tworzy trzy osobne konta serwera MySQL (aplikacja, administrator i tylko odczyt) z uprawnieniami. Przed uruchomieniem zmień przykładowe hasła i wykonaj skrypt jako administrator MySQL po utworzeniu bazy.
 
 ### Kopia zapasowa i test odtworzenia
 
