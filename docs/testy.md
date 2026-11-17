@@ -34,7 +34,6 @@ Wynik wpisuj po wykonaniu testu w lokalnym środowisku. Aktualnie wszystkie scen
 - [ ] Lighthouse Accessibility ma wynik co najmniej 90.
 - [ ] Każdy plik HTML przechodzi walidację W3C bez błędów.
 
-
 ## Przygotowanie środowiska i kolejność testów
 
 1. Uruchom MySQL w XAMPP i sprawdź, czy baza taskboard została utworzona.
