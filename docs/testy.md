@@ -33,3 +33,16 @@ Wynik wpisuj po wykonaniu testu w lokalnym środowisku. Aktualnie wszystkie scen
 - [ ] Po wylogowaniu chronione strony wymagają ponownego logowania.
 - [ ] Lighthouse Accessibility ma wynik co najmniej 90.
 - [ ] Każdy plik HTML przechodzi walidację W3C bez błędów.
+
+## Przygotowanie środowiska i kolejność testów
+
+1. Uruchom MySQL w XAMPP i sprawdź, czy baza taskboard została utworzona.
+2. W katalogu głównym projektu przygotuj lokalny plik .env na podstawie .env.example.
+3. W folderze backend/ wykonaj npm install, a następnie npm start.
+4. Otwórz aplikację pod adresem http://localhost:3000/ i utwórz konto testowe przez formularz rejestracji.
+5. Zaimportuj docs/postman/TaskBoard-TB3.postman_collection.json do Postmana. Postman powinien zachowywać ciasteczko sesji między żądaniami.
+6. Wykonaj najpierw Register albo Login, następnie Create board. Kolekcja zapisuje identyfikator utworzonej tablicy w zmiennej boardId.
+7. Wykonaj żądania w folderze Tasks and filters. Żądanie Create task zapisuje identyfikator zadania w zmiennej taskId.
+8. Żądanie Delete board znajduje się na końcu kolekcji, aby nie usuwać tablicy przed testami zadań.
+
+Nie wpisuj haseł z lokalnego pliku .env do kolekcji ani do repozytorium. Po zakończeniu testów uzupełnij kolumnę Wynik rzeczywistymi rezultatami.
