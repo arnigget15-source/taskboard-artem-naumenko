@@ -5,36 +5,264 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    {"key": "baseUrl", "value": "http://localhost:3000"},
-    {"key": "boardId", "value": "1"},
-    {"key": "taskId", "value": "1"},
-    {"key": "login", "value": "nowy.uzytkownik"},
-    {"key": "password", "value": "zmien-to-haslo"}
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "boardId",
+      "value": "1"
+    },
+    {
+      "key": "taskId",
+      "value": "1"
+    },
+    {
+      "key": "login",
+      "value": "nowy.uzytkownik"
+    },
+    {
+      "key": "password",
+      "value": "zmien-to-haslo"
+    }
   ],
   "item": [
-    {"name": "Health", "request": {"method": "GET", "url": "{{baseUrl}}/api/health"}},
-    {"name": "Auth", "item": [
-      {"name": "Register", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"Nowy\",\n  \"lastName\": \"Użytkownik\"\n}"}, "url": "{{baseUrl}}/api/auth/register"}},
-      {"name": "Login", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}"}, "url": "{{baseUrl}}/api/auth/login"}},
-      {"name": "Me", "request": {"method": "GET", "url": "{{baseUrl}}/api/auth/me"}},
-      {"name": "Logout", "request": {"method": "POST", "url": "{{baseUrl}}/api/auth/logout"}}
-    ]},
-    {"name": "Boards", "item": [
-      {"name": "List boards", "request": {"method": "GET", "url": "{{baseUrl}}/api/boards"}},
-      {"name": "Create board", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"name\": \"Tablica testowa\",\n  \"description\": \"Utworzona z Postmana\"\n}"}, "url": "{{baseUrl}}/api/boards"}},
-      {"name": "Update board", "request": {"method": "PUT", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"name\": \"Zmieniona tablica\",\n  \"description\": \"Opis po zmianie\"\n}"}, "url": "{{baseUrl}}/api/boards/{{boardId}}"}},
-      {"name": "Delete board", "request": {"method": "DELETE", "url": "{{baseUrl}}/api/boards/{{boardId}}"}}
-    ]},
-    {"name": "Tasks and filters", "item": [
-      {"name": "List tasks", "request": {"method": "GET", "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks"}},
-      {"name": "Combined filters", "request": {"method": "GET", "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?priority=high&assigneeId=1&q=API"}},
-      {"name": "Invalid assigneeId — expect 400", "request": {"method": "GET", "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?assigneeId=abc"}},
-      {"name": "Task details", "request": {"method": "GET", "url": "{{baseUrl}}/api/tasks/{{taskId}}"}},
-      {"name": "Create task", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"title\": \"Nowe zadanie z Postmana\",\n  \"description\": \"Opis testowy\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": null\n}"}, "url": "{{baseUrl}}/api/tasks"}},
-      {"name": "Invalid task title — expect 400", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"title\": \"x\",\n  \"boardId\": 1\n}"}, "url": "{{baseUrl}}/api/tasks"}},
-      {"name": "Update task", "request": {"method": "PUT", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"title\": \"Zmienione zadanie\",\n  \"description\": \"Opis po zmianie\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": 1\n}"}, "url": "{{baseUrl}}/api/tasks/{{taskId}}"}},
-      {"name": "Delete task", "request": {"method": "DELETE", "url": "{{baseUrl}}/api/tasks/{{taskId}}"}}
-    ]},
-    {"name": "Users", "request": {"method": "GET", "url": "{{baseUrl}}/api/users"}}
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"Nowy\",\n  \"lastName\": \"Użytkownik\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boards",
+      "item": [
+        {
+          "name": "List boards",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/boards"
+          }
+        },
+        {
+          "name": "Create board",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tablica testowa\",\n  \"description\": \"Utworzona z Postmana\"\n}"
+            },
+            "url": "{{baseUrl}}/api/boards"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('boardId', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update board",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Zmieniona tablica\",\n  \"description\": \"Opis po zmianie\"\n}"
+            },
+            "url": "{{baseUrl}}/api/boards/{{boardId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tasks and filters",
+      "item": [
+        {
+          "name": "List tasks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks"
+          }
+        },
+        {
+          "name": "Combined filters",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?priority=high&assigneeId=1&q=API"
+          }
+        },
+        {
+          "name": "Invalid assigneeId — expect 400",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?assigneeId=abc"
+          }
+        },
+        {
+          "name": "Task details",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/tasks/{{taskId}}"
+          }
+        },
+        {
+          "name": "Create task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Nowe zadanie z Postmana\",\n  \"description\": \"Opis testowy\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": null\n}"
+            },
+            "url": "{{baseUrl}}/api/tasks"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('taskId', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid task title — expect 400",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"x\",\n  \"boardId\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/tasks"
+          }
+        },
+        {
+          "name": "Update task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Zmienione zadanie\",\n  \"description\": \"Opis po zmianie\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/tasks/{{taskId}}"
+          }
+        },
+        {
+          "name": "Delete task",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/tasks/{{taskId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/users"
+      }
+    },
+    {
+      "name": "Delete board",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/boards/{{boardId}}"
+      }
+    }
   ]
 }
