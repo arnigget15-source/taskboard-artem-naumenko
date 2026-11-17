@@ -1,6 +1,6 @@
 # TaskBoard API
 
-Adres lokalnego serwera: http://localhost:3000. Wszystkie odpowiedzi API używają JSON, z wyjątkiem udanego wylogowania i usuwania (204). Trasy /api/users, /api/boards i /api/tasks wymagają aktywnej sesji. Po logowaniu przeglądarka i Postman przechowują ciasteczko sesji.
+Adres lokalnego serwera: `http://localhost:3000`. Wszystkie odpowiedzi API używają JSON, z wyjątkiem udanego wylogowania i usuwania (204). Trasy /api/users, /api/boards i /api/tasks wymagają aktywnej sesji. Po logowaniu przeglądarka i Postman przechowują ciasteczko sesji.
 
 ## Uwierzytelnianie
 
@@ -72,7 +72,7 @@ Dozwolone statusy: todo, in_progress, done. Dozwolone priorytety: low, medium, h
 
 Filtry można łączyć w jednym zapytaniu:
 
-```
+```http
 GET /api/boards/1/tasks?priority=high&assigneeId=2&q=API
 ```
 
