@@ -17,4 +17,4 @@ Tekst pochodzący z API jest wstawiany przez textContent lub createTextNode, a n
 
 ## Uruchomienie
 
-Frontend jest serwowany przez Express. Uruchom backend zgodnie z instrukcją w backend/README.md, a następnie otwórz http://localhost:3000/.
+Frontend jest serwowany przez Express. Uruchom backend zgodnie z instrukcją w backend/README.md, a następnie otwórz `http://localhost:3000/`.
