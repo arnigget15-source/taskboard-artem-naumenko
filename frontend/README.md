@@ -1,38 +1,20 @@
 # Frontend
 
-W folderze `frontend/` będzie znajdować się część strony, którą widzi użytkownik. Będą tu pliki odpowiedzialne za wygląd strony i jej obsługę.
+Frontend TaskBoard znajduje się w tym folderze. Zawiera trzy widoki: logowanie i rejestrację (login.html), listę tablic (boards.html) oraz tablicę Kanban (board.html).
 
-## Co będzie tutaj potrzebne?
+## Technologie i wygląd
 
-- pliki HTML – będą tworzyć układ strony;
-- pliki CSS – będą odpowiadać za kolory, rozmiary i rozmieszczenie elementów;
-- pliki JavaScript – będą obsługiwać przyciski, formularze i filtry;
-- obrazy i ikony – jeśli będą potrzebne w wyglądzie strony.
+Widoki korzystają z Bootstrap 5.3 oraz własnego css/style.css. Układ, kolory, formularze, karty, modale, filtry i responsywne kolumny odwzorowują makiety z materialy/makieta/. Na szerokim ekranie zadania są pokazane w trzech kolumnach, a na telefonie kolumny układają się jedna pod drugą.
 
-## Jakie strony planuję zrobić?
+## JavaScript
 
-Na podstawie makiet z folderu `materialy/makieta/` frontend będzie zawierał:
+- js/api.js – wspólna funkcja api(), obsługa błędów 401, komunikaty i nagłówek sesji.
+- js/login.js – logowanie, rejestracja i walidacja formularzy.
+- js/boards.js – lista, tworzenie, edycja i miękkie usuwanie tablic.
+- js/board.js – zadania, filtry priority/assigneeId/q, modal, zmiana statusu i usuwanie.
 
-1. **Logowanie** – formularz do wejścia na konto.
-2. **Rejestrację** – formularz do założenia konta.
-3. **Listę tablic** – miejsce, w którym będą widoczne tablice użytkownika.
-4. **Tworzenie tablicy** – formularz z nazwą i opisem.
-5. **Widok tablicy** – lista zadań przypisanych do danej tablicy.
-6. **Filtrowanie** – możliwość znalezienia zadań według wybranych informacji.
-7. **Dodawanie i edycję zadań** – formularz z tytułem, opisem, statusem i terminem.
-8. **Szczegóły zadania** – więcej informacji o wybranym zadaniu.
-9. **Wersję na telefon** – żeby strona dobrze wyglądała również na mniejszym ekranie.
+Tekst pochodzący z API jest wstawiany przez textContent lub createTextNode, a nie przez niebezpieczne składanie HTML.
 
-## Jak będzie działać frontend?
+## Uruchomienie
 
-Po kliknięciu przycisku strona będzie reagować na działanie użytkownika. Na przykład po wybraniu opcji dodania zadania pokaże się formularz. Po jego wypełnieniu dane zostaną wysłane do backendu.
-
-Frontend będzie też wyświetlał informacje zwrotne, na przykład czy zadanie zostało dodane, albo czy trzeba poprawić jakieś pole.
-
-## Połączenie z backendem
-
-Frontend nie będzie łączyć się bezpośrednio z bazą danych. Będzie wysyłać dane do backendu, a ten zajmie się ich sprawdzeniem i zapisaniem.
-
-## Aktualny stan
-
-Na razie w tym folderze znajduje się opis planowanego frontendu. Pliki HTML, CSS i JavaScript zostaną dodane podczas tworzenia strony.
+Frontend jest serwowany przez Express. Uruchom backend zgodnie z instrukcją w backend/README.md, a następnie otwórz http://localhost:3000/.
