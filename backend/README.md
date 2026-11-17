@@ -8,7 +8,7 @@ Backend TaskBoard działa na Node.js i Express. Udostępnia API, łączy się z 
 2. W katalogu głównym skopiuj .env.example do .env i wpisz własne dane połączenia oraz długi losowy SESSION_SECRET.
 3. W terminalu przejdź do backend/ i wykonaj npm install.
 4. Uruchom npm start.
-5. Otwórz http://localhost:3000/.
+5. Otwórz `http://localhost:3000/`.
 
 ## Bezpieczeństwo
 
