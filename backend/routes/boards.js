@@ -12,12 +12,10 @@ router.get('/', async (req, res, next) => {
     const [rows] = await pool.query(
       `SELECT b.id, b.name, b.description, b.ownerId, b.createdAt,
               u.firstName AS ownerFirstName, u.lastName AS ownerLastName,
-              COUNT(t.id) AS activeTasks
+              (SELECT COUNT(*) FROM tasks t WHERE t.boardId = b.id AND t.isDeleted = 0) AS activeTasks
        FROM boards b
        JOIN users u ON u.id = b.ownerId
-       LEFT JOIN tasks t ON t.boardId = b.id AND t.isDeleted = 0
        WHERE b.isDeleted = 0 AND b.ownerId = ?
-       GROUP BY b.id
        ORDER BY b.createdAt DESC`,
       [req.session.userId]
     );
