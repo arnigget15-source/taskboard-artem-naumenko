@@ -31,7 +31,7 @@ HTML, CSS, JavaScript, Bootstrap 5.3, Node.js, Express, express-session, bcryptj
 3. Skopiuj .env.example do .env w katalogu głównym. Ustaw dane MySQL zgodne z lokalną konfiguracją oraz własny długi SESSION_SECRET. Nie dodawaj .env do Git.
 4. W terminalu przejdź do backend/ i wykonaj npm install.
 5. Uruchom npm start.
-6. Otwórz http://localhost:3000/ i zarejestruj konto.
+6. Otwórz `http://localhost:3000/` i zarejestruj konto.
 
 ## Testy i dokumentacja
 
