@@ -1,121 +1,43 @@
 # TaskBoard
 
-TaskBoard to strona, która ma pomagać w organizowaniu zadań. Użytkownik będzie mógł tworzyć tablice, dodawać do nich zadania i sprawdzać, co jest już zrobione, a co jeszcze trzeba wykonać.
+TaskBoard to aplikacja do organizowania zadań zespołu. Użytkownik może założyć konto, zalogować się, tworzyć własne tablice, dodawać zadania, zmieniać ich status, przypisywać osoby i filtrować listę.
 
-Projekt jest w trakcie przygotowania. Repozytorium zawiera dokumentację, frontend oraz backend rozwijany etapami.
+## Funkcje
 
-## Co będzie można zrobić na stronie?
-
-- założyć konto i zalogować się;
-- tworzyć własne tablice;
-- dodawać zadania do tablic;
-- edytować i usuwać zadania;
-- zmieniać status zadania;
-- ustawiać priorytet i termin;
-- przypisywać zadania do użytkowników;
-- wyszukiwać i filtrować zadania.
+- rejestracja i logowanie z hasłami haszowanymi przez bcrypt;
+- sesja użytkownika i ochrona tras API;
+- tworzenie, edycja i miękkie usuwanie tablic;
+- widok Kanban: Do zrobienia, W trakcie, Gotowe;
+- dodawanie, edycja, szczegóły, zmiana statusu i miękkie usuwanie zadań;
+- filtry priorytetu, osoby przypisanej i fragmentu tytułu;
+- responsywny interfejs Bootstrap 5.3 zgodny z makietami materialy/makieta/.
 
 ## Technologie
 
-- **HTML** i **CSS** – struktura i wygląd strony;
-- **JavaScript** – logika frontendowa i backendowa;
-- **Bootstrap** – układ elementów strony;
-- **Node.js** i **Express** – backend API;
-- **MySQL/MariaDB** – baza danych;
-- **Git i GitHub** – kontrola wersji.
+HTML, CSS, JavaScript, Bootstrap 5.3, Node.js, Express, express-session, bcryptjs, MySQL/MariaDB i Git.
 
-## Struktura repozytorium
+## Struktura
 
-- `frontend/` – widoki, formularze, style i skrypty strony.
-- `backend/` – serwer Express, trasy API i połączenie z bazą.
-- `database/` – skrypty SQL, zapytania i kopie zapasowe.
-- `docs/` – dokumentacja i kolekcja Postman.
-- `materialy/` – makiety, diagram ERD i pliki pomocnicze.
-- `.github/` – konfiguracja automatycznego sprawdzania.
+- frontend/ – strony HTML, style i skrypty przeglądarki.
+- backend/ – serwer Express, sesje, API i połączenie z bazą.
+- database/ – skrypty SQL, dane testowe i kopie zapasowe.
+- docs/ – dokumentacja API, testy, zadania i kolekcje Postman.
+- materialy/ – makiety, diagram ERD i materiały pomocnicze.
 
-## Baza danych
+## Uruchomienie lokalne (XAMPP)
 
-Baza danych nazywa się `taskboard` i składa się z trzech tabel:
+1. Uruchom MySQL w XAMPP.
+2. Zaimportuj database/taskboard.sql w phpMyAdmin. Uwaga: skrypt usuwa i odtwarza bazę taskboard; przed importem wykonaj kopię, jeśli chcesz zachować dane.
+3. Skopiuj .env.example do .env w katalogu głównym. Ustaw dane MySQL zgodne z lokalną konfiguracją oraz własny długi SESSION_SECRET. Nie dodawaj .env do Git.
+4. W terminalu przejdź do backend/ i wykonaj npm install.
+5. Uruchom npm start.
+6. Otwórz `http://localhost:3000/` i zarejestruj konto.
 
-| Tabela | Zawartość |
-| --- | --- |
-| `users` | Loginy, hashe haseł i dane użytkowników. |
-| `boards` | Nazwy tablic, właściciel i pola usuwania. |
-| `tasks` | Tytuł, opis, status, priorytet, termin i przypisany użytkownik. |
+## Testy i dokumentacja
 
-Relacje:
+- docs/api.md – opis tras i przykładowe JSON.
+- docs/testy.md – scenariusze testowe do wykonania.
+- docs/postman/TaskBoard-TB3.postman_collection.json – kolekcja Postman dla etapu TB-3.
+- W backend/ uruchom npm run check, aby sprawdzić składnię serwera i tras.
 
-- `boards.ownerId` wskazuje na `users.id`.
-- `tasks.boardId` wskazuje na `boards.id`.
-- `tasks.assigneeId` wskazuje na `users.id` i może być pusty.
-- `deletedById` w tablicach i zadaniach wskazuje na użytkownika, który usunął rekord.
-
-Usuwanie jest miękkie (soft delete): rekord pozostaje w bazie, a aplikacja ustawia
-`isDeleted = 1` i `deletedAt`. Listy API zwracają tylko rekordy z
-`isDeleted = 0`. Pole `deletedById` dla zadań pozostaje puste do kolejnego etapu.
-
-### Odtworzenie bazy w XAMPP
-
-1. Uruchom MySQL w XAMPP Control Panel.
-2. Otwórz `http://localhost/phpmyadmin/`.
-3. Wybierz Import i wskaż plik `database/taskboard.sql`.
-4. Plik najpierw wykonuje `DROP DATABASE IF EXISTS taskboard`, więc usuwa całą poprzednią bazę, a następnie tworzy ją ponownie. Przed importem wykonaj kopię zapasową, jeśli chcesz zachować dane.
-5. `database/konta.sql` zawiera użytkowników aplikacji w tabeli `users`.
-6. `database/db_users.sql` tworzy trzy osobne konta serwera MySQL (aplikacja, administrator i tylko odczyt) z uprawnieniami. Przed uruchomieniem zmień przykładowe hasła i wykonaj skrypt jako administrator MySQL po utworzeniu bazy.
-
-### Kopia zapasowa i test odtworzenia
-
-Kopia znajduje się w `database/backup/taskboard.sql`. Aby sprawdzić odtworzenie:
-
-1. Utwórz pustą bazę `taskboard_test` w phpMyAdmin.
-2. W kopii zmień nazwę bazy w instrukcjach `CREATE DATABASE` i `USE`
-   z `taskboard` na `taskboard_test`.
-3. Zaimportuj zmieniony plik do phpMyAdmin.
-4. Porównaj liczbę rekordów poleceniami:
-
-```sql
-SELECT 'users' AS tabela, COUNT(*) AS rekordy FROM taskboard.users
-UNION ALL
-SELECT 'boards', COUNT(*) FROM taskboard.boards
-UNION ALL
-SELECT 'tasks', COUNT(*) FROM taskboard.tasks;
-
-SELECT 'users' AS tabela, COUNT(*) AS rekordy FROM taskboard_test.users
-UNION ALL
-SELECT 'boards', COUNT(*) FROM taskboard_test.boards
-UNION ALL
-SELECT 'tasks', COUNT(*) FROM taskboard_test.tasks;
-```
-
-Oczekiwana liczba po imporcie przykładowego skryptu:
-
-- `users`: 5;
-- `boards`: 2;
-- `tasks`: 10 (w tym 2 miękko usunięte).
-
-Samo repozytorium nie może potwierdzić wyniku lokalnego importu — porównanie należy
-wykonać w phpMyAdmin.
-
-## API
-
-Backend uruchamia się poleceniem `npm start` w folderze `backend/`.
-Dostępne trasy etapu TB-2:
-
-- `GET /api/boards`;
-- `GET /api/boards/:boardId/tasks`;
-- `GET /api/tasks/:id`;
-- `POST /api/tasks`;
-- `PUT /api/tasks/:id`;
-- `DELETE /api/tasks/:id` (soft delete);
-- `GET /api/users` (bez pola `passwordHash`).
-
-Kolekcja testów znajduje się w
-`docs/postman/TaskBoard-TB2.postman_collection.json`.
-
-## Przydatne pliki
-
-- [Backend](backend/README.md)
-- [Baza danych](database/README.md)
-- [Dokumentacja](docs/README.md)
-- [Materiały](materialy/README.md)
-- [Diagram ERD](materialy/erd.md)
+Testy ręczne, Lighthouse i walidację W3C należy wykonać lokalnie przed oddaniem. Nie są oznaczone jako zaliczone, dopóki nie zostaną faktycznie uruchomione.

@@ -1,40 +1,29 @@
 # Backend
 
-Backend to część aplikacji, która będzie działać po stronie serwera. Będzie odbierać dane ze strony, sprawdzać je i wykonywać odpowiednie działania.
+Backend TaskBoard działa na Node.js i Express. Udostępnia API, łączy się z MySQL/MariaDB przez mysql2, a logowanie i rejestracja korzystają z bcryptjs oraz sesji express-session.
 
-## Do czego będzie potrzebny?
+## Instalacja i uruchomienie
 
-Backend będzie odpowiadać między innymi za:
-
-- rejestrację i logowanie użytkowników;
-- sprawdzanie, czy użytkownik ma dostęp do danej tablicy;
-- dodawanie, edytowanie i usuwanie tablic;
-- dodawanie i edytowanie zadań;
-- zmianę statusu i priorytetu zadań;
-- przypisywanie zadań do użytkowników;
-- pobieranie i zapisywanie danych w bazie;
-- wysyłanie odpowiedzi do frontendu.
-
-## Przykład działania
-
-Jeśli użytkownik będzie chciał dodać zadanie, frontend wyśle jego dane do backendu. Backend sprawdzi, czy dane są poprawne i czy użytkownik ma dostęp do wybranej tablicy. Jeśli wszystko będzie w porządku, zapisze zadanie w bazie danych i odeśle informację do strony.
-
-## Jakie pliki będą tutaj potrzebne?
-
-W tym folderze mogą znaleźć się pliki do obsługi użytkowników, tablic, zadań, połączenia z bazą danych i ustawień serwera. Dokładny podział plików będzie zależał od tego, jak zostanie zrobiony backend.
+1. Uruchom MySQL w XAMPP i przygotuj bazę zgodnie z database/README.md.
+2. W katalogu głównym skopiuj .env.example do .env i wpisz własne dane połączenia oraz długi losowy SESSION_SECRET.
+3. W terminalu przejdź do backend/ i wykonaj npm install.
+4. Uruchom npm start.
+5. Otwórz `http://localhost:3000/`.
 
 ## Bezpieczeństwo
 
-Backend będzie musiał sprawdzać dane również po stronie serwera. Nie wystarczy sprawdzenie formularza w przeglądarce. Ważne będzie też sprawdzanie uprawnień użytkownika.
+Hasła są przechowywane wyłącznie jako hash bcrypt. Identyfikator użytkownika jest przechowywany w sesji, a ciasteczko sesji ma ustawienia httpOnly i sameSite=lax. Wszystkie trasy /api/users, /api/boards i /api/tasks wymagają zalogowania. Operacje na tablicach i zadaniach sprawdzają właściciela tablicy.
 
-Hasła nie powinny być zapisywane zwykłym tekstem. W diagramie bazy danych przewidziano pole `passwordHash`, w którym będzie przechowywany skrót hasła.
+Wbudowany magazyn sesji Express służy do lokalnego developmentu; przed wdrożeniem produkcyjnym należy skonfigurować trwały magazyn sesji i HTTPS.
 
-## Powiązane części projektu
+## Trasy
 
-- [Frontend](../frontend/README.md) – wysyła dane do backendu.
-- [Baza danych](../database/README.md) – przechowuje dane aplikacji.
-- [Diagram ERD](../materialy/erd.md) – pokazuje tabele i ich powiązania.
+- POST /api/auth/register, POST /api/auth/login, GET /api/auth/me, POST /api/auth/logout.
+- GET/POST /api/boards, PUT/DELETE /api/boards/:id.
+- GET /api/boards/:boardId/tasks z filtrami priority, assigneeId i q.
+- GET /api/tasks/:id, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id.
+- GET /api/users – lista użytkowników bez passwordHash.
 
-## Aktualny stan
+## Sprawdzenie składni
 
-Na razie folder zawiera opis tego, co będzie robić backend. Kod serwera zostanie dodany w późniejszym etapie.
+W katalogu backend/ wykonaj npm run check.
