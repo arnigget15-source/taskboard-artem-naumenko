@@ -3,41 +3,46 @@
 TaskBoard to aplikacja do organizowania zadań zespołu. Użytkownik może założyć konto, zalogować się, tworzyć własne tablice, dodawać zadania, zmieniać ich status, przypisywać osoby i filtrować listę.
 
 ## Funkcje
-
-- rejestracja i logowanie z hasłami haszowanymi przez bcrypt;
-- sesja użytkownika i ochrona tras API;
-- tworzenie, edycja i miękkie usuwanie tablic;
-- widok Kanban: Do zrobienia, W trakcie, Gotowe;
-- dodawanie, edycja, szczegóły, zmiana statusu i miękkie usuwanie zadań;
-- filtry priorytetu, osoby przypisanej i fragmentu tytułu;
-- responsywny interfejs Bootstrap 5.3 zgodny z makietami materialy/makieta/.
+- Rejestracja i logowanie z hasłami haszowanymi przez bcrypt.
+- Sesja użytkownika i ochrona tras API.
+- Tworzenie, edycja i miękkie usuwanie tablic i zadań.
+- Widok Kanban: Do zrobienia, W trakcie, Gotowe.
+- Łączenie filtrów priorytetu, osoby przypisanej i fragmentu tytułu.
+- Walidacja formularzy w przeglądarce i API.
+- Responsywny interfejs Bootstrap 5.3.
 
 ## Technologie
-
-HTML, CSS, JavaScript, Bootstrap 5.3, Node.js, Express, express-session, bcryptjs, MySQL/MariaDB i Git.
+HTML, CSS, JavaScript, Bootstrap 5.3, Node.js 18+, Express, express-session, bcryptjs, MySQL/MariaDB i Git.
 
 ## Struktura
-
 - frontend/ – strony HTML, style i skrypty przeglądarki.
 - backend/ – serwer Express, sesje, API i połączenie z bazą.
-- database/ – skrypty SQL, dane testowe i kopie zapasowe.
-- docs/ – dokumentacja API, testy, zadania i kolekcje Postman.
+- database/ – skrypty SQL, dane testowe i konta MySQL.
+- docs/ – dokumentacja API, testy i kolekcje Postman.
 - materialy/ – makiety, diagram ERD i materiały pomocnicze.
 
-## Uruchomienie lokalne (XAMPP)
+## Uruchomienie z czystego klonu (Windows + XAMPP)
 
-1. Uruchom MySQL w XAMPP.
-2. Zaimportuj database/taskboard.sql w phpMyAdmin. Uwaga: skrypt usuwa i odtwarza bazę taskboard; przed importem wykonaj kopię, jeśli chcesz zachować dane.
-3. Skopiuj .env.example do .env w katalogu głównym. Ustaw dane MySQL zgodne z lokalną konfiguracją oraz własny długi SESSION_SECRET. Nie dodawaj .env do Git.
-4. W terminalu przejdź do backend/ i wykonaj npm install.
-5. Uruchom npm start.
-6. Otwórz `http://localhost:3000/` i zarejestruj konto.
+1. Zainstaluj Node.js 18 lub nowszy, Git i XAMPP.
+2. Sklonuj repozytorium: git clone https://github.com/arnigget15-source/taskboard-artem-naumenko.git
+3. Przejdź do katalogu taskboard-artem-naumenko.
+4. Uruchom MySQL w XAMPP Control Panel.
+5. Otwórz phpMyAdmin (http://localhost/phpmyadmin) i zaimportuj database/taskboard.sql.
+
+   UWAGA: skrypt usuwa i odtwarza całą bazę taskboard. Przed importem istniejącej bazy wykonaj kopię zapasową.
+
+6. W database/db_users.sql zastąp wszystkie hasła CHANGE_ME... własnymi hasłami. Wykonaj ten skrypt w phpMyAdmin jako administrator MySQL. Zapisz hasło taskboard_app.
+7. Skopiuj .env.example do .env w katalogu głównym projektu (PowerShell: Copy-Item .env.example .env).
+8. Otwórz .env i wpisz hasło taskboard_app w DB_PASSWORD. Ustaw też długą losową wartość SESSION_SECRET. Nie udostępniaj .env i nie dodawaj go do Git.
+9. W terminalu przejdź do backend/ i wykonaj npm install, następnie npm run check i npm start.
+10. Otwórz http://localhost:3000/ i wybierz Rejestracja.
+
+Każdy użytkownik rejestruje się w TaskBoard samodzielnie — osobne konto MySQL dla każdego nie jest potrzebne. Aplikacja działa lokalnie, dopóki uruchomione są MySQL i proces Node.js.
 
 ## Testy i dokumentacja
+- docs/api.md – opis tras, parametrów i odpowiedzi API.
+- docs/testy.md – scenariusze testowe i checklista walidacji.
+- docs/postman/TaskBoard-TB3.postman_collection.json – kolekcja Postman dla TB-3.
+- W folderze backend/ polecenie npm run check sprawdza składnię serwera i tras.
 
-- docs/api.md – opis tras i przykładowe JSON.
-- docs/testy.md – scenariusze testowe do wykonania.
-- docs/postman/TaskBoard-TB3.postman_collection.json – kolekcja Postman dla etapu TB-3.
-- W backend/ uruchom npm run check, aby sprawdzić składnię serwera i tras.
-
-Testy ręczne, Lighthouse i walidację W3C należy wykonać lokalnie przed oddaniem. Nie są oznaczone jako zaliczone, dopóki nie zostaną faktycznie uruchomione.
+Testy ręczne, Lighthouse Accessibility i walidację W3C należy wykonać lokalnie przed oddaniem. Nie oznaczaj ich jako zaliczone, dopóki nie zostały faktycznie uruchomione.
