@@ -31,8 +31,8 @@
       body.append(meta); card.append(body);
       const footer = document.createElement('div'); footer.className = 'card-footer';
       const open = document.createElement('a'); open.className = 'btn btn-primary btn-sm'; open.href = 'board.html?id=' + encodeURIComponent(board.id); open.textContent = 'Otwórz';
-      const edit = document.createElement('button'); edit.className = 'btn btn-outline-primary btn-sm'; edit.textContent = 'Edytuj'; edit.addEventListener('click', () => openEditor(board));
-      const remove = document.createElement('button'); remove.className = 'btn btn-outline-danger btn-sm'; remove.textContent = 'Usuń'; remove.addEventListener('click', () => deleteBoard(board));
+      const edit = document.createElement('button'); edit.type = 'button'; edit.className = 'btn btn-outline-primary btn-sm'; edit.textContent = 'Edytuj'; edit.addEventListener('click', () => openEditor(board));
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'btn btn-outline-danger btn-sm'; remove.textContent = 'Usuń'; remove.addEventListener('click', () => deleteBoard(board));
       footer.append(open, edit, remove); card.append(footer); col.append(card); list.append(col);
     }
   }
@@ -45,9 +45,15 @@
   function openEditor(board = null) {
     editingId = board ? board.id : null;
     document.getElementById('boardModalTitle').textContent = board ? 'Edytuj tablicę' : 'Nowa tablica';
-    document.getElementById('boardName').value = board ? board.name : '';
-    document.getElementById('boardDescription').value = board ? (board.description || '') : '';
-    document.getElementById('boardName').classList.remove('is-invalid');
+    const name = document.getElementById('boardName');
+    const description = document.getElementById('boardDescription');
+    name.value = board ? board.name : '';
+    description.value = board ? (board.description || '') : '';
+    name.classList.remove('is-invalid');
+    name.removeAttribute('aria-invalid');
+    description.classList.remove('is-invalid');
+    description.removeAttribute('aria-invalid');
+    document.getElementById('boardFormMessage').textContent = '';
     modal.show();
   }
 
@@ -62,14 +68,26 @@
     event.preventDefault();
     const name = document.getElementById('boardName');
     const description = document.getElementById('boardDescription');
-    if (!name.value.trim()) { name.classList.add('is-invalid'); return; }
-    name.classList.remove('is-invalid');
+    const invalidName = !name.value.trim() || name.value.trim().length > 80;
+    const invalidDescription = description.value.trim().length > 255;
+    name.classList.toggle('is-invalid', invalidName);
+    name.setAttribute('aria-invalid', String(invalidName));
+    description.classList.toggle('is-invalid', invalidDescription);
+    description.setAttribute('aria-invalid', String(invalidDescription));
+    if (invalidName || invalidDescription) {
+      document.getElementById('boardFormMessage').textContent = invalidName
+        ? 'Nazwa tablicy jest wymagana i może mieć maksymalnie 80 znaków.'
+        : 'Opis może mieć maksymalnie 255 znaków.';
+      (invalidName ? name : description).focus();
+      return;
+    }
+    document.getElementById('boardFormMessage').textContent = '';
     try {
       await api(editingId ? '/boards/' + editingId : '/boards', editingId ? 'PUT' : 'POST', {
         name: name.value.trim(), description: description.value.trim()
       });
       modal.hide(); showMessage(message, editingId ? 'Zapisano zmiany.' : 'Dodano tablicę.', 'success'); await loadBoards();
-    } catch (error) { showMessage(message, error.message); }
+    } catch (error) { document.getElementById('boardFormMessage').textContent = error.message; }
   });
 
   setupHeader().then(loadBoards).catch(error => showMessage(message, error.message));
