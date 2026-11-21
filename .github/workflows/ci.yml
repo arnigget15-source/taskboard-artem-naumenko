@@ -1,0 +1,34 @@
+name: TaskBoard checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - 'fix/**'
+      - 'feature/**'
+
+jobs:
+  backend-and-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+      - name: Check backend JavaScript syntax
+        working-directory: backend
+        run: npm run check
+      - name: Check frontend JavaScript syntax
+        run: |
+          for file in frontend/js/*.js; do
+            node --check "$file"
+          done
+      - name: Validate Postman collection JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('docs/postman/TaskBoard-TB3.postman_collection.json', 'utf8'))"

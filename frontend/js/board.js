@@ -18,6 +18,11 @@
     return node;
   }
 
+  function markInvalid(input, invalid) {
+    input.classList.toggle('is-invalid', invalid);
+    input.setAttribute('aria-invalid', String(invalid));
+  }
+
   async function loadUsers() {
     users = await api('/users');
     const filter = document.getElementById('filterAssignee');
@@ -51,8 +56,7 @@
     body.append(el('p', 'task-details', 'Osoba: ' + (assignee ? assignee.firstName + ' ' + assignee.lastName : 'nieprzypisane')));
     const actions = el('div', 'task-actions');
     const move = el('button', 'btn btn-outline-primary', task.status === 'done' ? 'Otwórz ponownie' : 'Przenieś do: ' + statusLabels[statuses[statuses.indexOf(task.status) + 1]]);
-    move.type = 'button';
-    move.addEventListener('click', () => changeStatus(task));
+    move.type = 'button'; move.addEventListener('click', () => changeStatus(task));
     const details = el('button', 'btn btn-outline-secondary', 'Szczegóły'); details.type = 'button'; details.addEventListener('click', () => openTask(task));
     const remove = el('button', 'btn btn-outline-danger', 'Usuń'); remove.type = 'button'; remove.addEventListener('click', () => deleteTask(task));
     actions.append(move, details, remove); body.append(actions); card.append(body);
@@ -93,28 +97,43 @@
     const created = document.getElementById('taskCreatedAt');
     created.classList.toggle('d-none', !task || !task.createdAt);
     created.textContent = task && task.createdAt ? 'Utworzono: ' + formatDate(String(task.createdAt).slice(0, 10)) : '';
-    document.getElementById('taskTitle').classList.remove('is-invalid');
+    for (const input of form.querySelectorAll('.is-invalid')) markInvalid(input, false);
+    document.getElementById('taskFormMessage').textContent = '';
     modal.show();
   }
 
   async function saveTask(event) {
     event.preventDefault();
     const title = document.getElementById('taskTitle');
-    if (title.value.trim().length < 3 || title.value.trim().length > 100) { title.classList.add('is-invalid'); return; }
-    title.classList.remove('is-invalid');
+    const description = document.getElementById('taskDescription');
+    const deadline = document.getElementById('taskDeadline');
+    const invalidTitle = title.value.trim().length < 3 || title.value.trim().length > 100;
+    const invalidDescription = description.value.trim().length > 5000;
+    const invalidDeadline = deadline.value !== '' && !deadline.validity.valid;
+    markInvalid(title, invalidTitle);
+    markInvalid(description, invalidDescription);
+    markInvalid(deadline, invalidDeadline);
+    if (invalidTitle || invalidDescription || invalidDeadline) {
+      document.getElementById('taskFormMessage').textContent = invalidTitle
+        ? 'Tytuł musi mieć od 3 do 100 znaków.'
+        : invalidDescription ? 'Opis może mieć maksymalnie 5000 znaków.' : 'Podaj prawidłowy termin.';
+      (invalidTitle ? title : invalidDescription ? description : deadline).focus();
+      return;
+    }
+    document.getElementById('taskFormMessage').textContent = '';
     const payload = {
       title: title.value.trim(),
-      description: document.getElementById('taskDescription').value.trim(),
+      description: description.value.trim(),
       status: document.getElementById('taskStatus').value,
       priority: document.getElementById('taskPriority').value,
-      deadline: document.getElementById('taskDeadline').value || null,
+      deadline: deadline.value || null,
       assigneeId: document.getElementById('taskAssignee').value || null,
       boardId: Number(boardId)
     };
     try {
       await api(currentTask ? '/tasks/' + currentTask.id : '/tasks', currentTask ? 'PUT' : 'POST', payload);
       modal.hide(); showMessage(message, currentTask ? 'Zapisano zmiany.' : 'Dodano zadanie.', 'success'); await loadTasks();
-    } catch (error) { showMessage(message, error.message); }
+    } catch (error) { document.getElementById('taskFormMessage').textContent = error.message; }
   }
 
   async function changeStatus(task) {

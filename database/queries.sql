@@ -1,6 +1,4 @@
 -- 10 przykładowych zapytań SQL do TaskBoard.
--- Uwaga: lista dokładnych zapytań z PDF poniedziałkowego nie była dołączona;
--- poniższe przykłady przygotowano na podstawie diagramu ERD i tabel projektu.
 
 -- 1. Lista aktywnych tablic.
 SELECT id, name, description, ownerId FROM boards WHERE isDeleted = 0;
