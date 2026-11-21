@@ -9,6 +9,15 @@ const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
+
+// Malformed JSON is a client error (400), not an internal server error (500).
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Niepoprawny JSON w żądaniu' });
+  }
+  return next(err);
+});
+
 app.use(session({
   name: 'taskboard.sid',
   secret: process.env.SESSION_SECRET || 'taskboard-local-development-secret-change-this',
