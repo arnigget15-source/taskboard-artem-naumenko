@@ -27,6 +27,13 @@ Wynik wpisuj po wykonaniu testu w lokalnym środowisku. Scenariusze mają status
 | T-21 | Brakujące zadanie | GET /api/tasks/999999 | 404 | Do wykonania |
 | T-22 | Usunięcie zadania | DELETE /api/tasks/:taskId, potem lista zadań | 204; zadanie nie występuje na liście | Do wykonania |
 | T-23 | Izolacja tablic | Zalogować się na drugie konto i otworzyć cudzą tablicę | 404 | Do wykonania |
+| T-24 | Niepoprawny JSON | POST /api/tasks z niepoprawnym body JSON | 400, komunikat o niepoprawnym JSON | Do wykonania |
+| T-25 | UI: walidacja logowania | Wysłać pusty formularz logowania | Pola oznaczone jako niepoprawne; komunikat widoczny | Do wykonania lokalnie |
+| T-26 | UI: walidacja rejestracji | Wprowadzić login/hasło niezgodne z regułami | Błędne pola oznaczone; formularz nie wysyła żądania | Do wykonania lokalnie |
+| T-27 | UI: CRUD tablic | Utworzyć, edytować i usunąć własną tablicę | Zmiany widoczne na liście; usunięcie potwierdzone | Do wykonania lokalnie |
+| T-28 | UI: CRUD zadań | Utworzyć, edytować, zmienić status i usunąć zadanie | Każda zmiana widoczna na tablicy | Do wykonania lokalnie |
+| T-29 | UI: responsywność | Sprawdzić tablice i Kanban na szerokości telefonu | Układ nie powoduje poziomego przewijania strony | Do wykonania lokalnie |
+| T-30 | Dostępność | Uruchomić Lighthouse Accessibility i W3C HTML Validator | Lighthouse ≥90; W3C bez błędów | Do wykonania lokalnie |
 
 ## Testy interfejsu i dostępności
 - [ ] Rejestracja: wymagane pola, format loginu, długość hasła i zgodność powtórzenia hasła.
