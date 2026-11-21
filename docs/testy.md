@@ -35,7 +35,7 @@ Wynik wpisuj po wykonaniu testu w lokalnym środowisku. Scenariusze mają status
 | T-29 | UI: responsywność | Sprawdzić tablice i Kanban na szerokości telefonu | Układ nie powoduje poziomego przewijania strony | Do wykonania lokalnie |
 | T-30 | Dostępność | Uruchomić Lighthouse Accessibility i W3C HTML Validator | Lighthouse ≥90; W3C bez błędów | Do wykonania lokalnie |
 | T-31 | UI: połączone filtry | Ustawić priorytet, osobę i wyszukiwanie tytułu jednocześnie | Lista pokazuje zadania spełniające wszystkie filtry | Do wykonania lokalnie |
-| T-32 | UI: błąd API | Wywozвать запрос с ошибкой API (например, неверный ID) | Użytkownik widzi czytelny komunikat, bez błędu JS | Do wykonania lokalnie |
+| T-32 | UI: błąd API | Wywołać żądanie API z błędnym ID | Użytkownik widzi czytelny komunikat, bez błędu JS | Do wykonania lokalnie |
 
 ## Przygotowanie środowiska i kolejność testów
 
