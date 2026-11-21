@@ -31,11 +31,12 @@ HTML, CSS, JavaScript, Bootstrap 5.3, Node.js 18+, Express, express-session, bcr
 
    UWAGA: skrypt usuwa i odtwarza całą bazę taskboard. Przed importem istniejącej bazy wykonaj kopię zapasową.
 
-6. W database/db_users.sql zastąp wszystkie hasła CHANGE_ME... własnymi hasłami. Wykonaj ten skrypt w phpMyAdmin jako administrator MySQL. Zapisz hasło taskboard_app.
-7. Skopiuj .env.example do .env w katalogu głównym projektu (PowerShell: Copy-Item .env.example .env).
-8. Otwórz .env i wpisz hasło taskboard_app w DB_PASSWORD. Ustaw też długą losową wartość SESSION_SECRET. Nie udostępniaj .env i nie dodawaj go do Git.
-9. W terminalu przejdź do backend/ i wykonaj npm install, następnie npm run check i npm start.
-10. Otwórz http://localhost:3000/ i wybierz Rejestracja.
+6. W database/konta.sql zastąp hasła CHANGE_ME... własnymi hasłami. Wykonaj skrypt w phpMyAdmin jako administrator MySQL. Konto taskboard_app ma tylko SELECT, INSERT i UPDATE — bez DELETE. Zapisz jego hasło do .env jako DB_PASSWORD.
+7. Opcjonalnie zaimportuj database/users_seed.sql, aby dodać przykładowych użytkowników aplikacji. To konta TaskBoard, a nie konta MySQL.
+8. Skopiuj .env.example do .env w katalogu głównym projektu (PowerShell: Copy-Item .env.example .env).
+9. Otwórz .env i wpisz hasło taskboard_app w DB_PASSWORD. Ustaw też długą losową wartość SESSION_SECRET. Nie udostępniaj .env i nie dodawaj go do Git.
+10. W terminalu przejdź do backend/ i wykonaj npm install, następnie npm run check i npm start.
+11. Otwórz http://localhost:3000/ i wybierz Rejestracja.
 
 Każdy użytkownik rejestruje się w TaskBoard samodzielnie — osobne konto MySQL dla każdego nie jest potrzebne. Aplikacja działa lokalnie, dopóki uruchomione są MySQL i proces Node.js.
 
