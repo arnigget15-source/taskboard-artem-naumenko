@@ -32,7 +32,18 @@
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/api/health"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Auth",
@@ -52,7 +63,19 @@
               "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"Nowy\",\n  \"lastName\": \"Użytkownik\"\n}"
             },
             "url": "{{baseUrl}}/api/auth/register"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 201\", function () { pm.response.to.have.status(201); });",
+                  "pm.test(\"Response does not expose passwordHash\", function () { if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.code !== 204) pm.expect(pm.response.text()).not.to.include(\"passwordHash\"); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Login",
@@ -69,21 +92,66 @@
               "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}"
             },
             "url": "{{baseUrl}}/api/auth/login"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response does not expose passwordHash\", function () { if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.code !== 204) pm.expect(pm.response.text()).not.to.include(\"passwordHash\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login with invalid credentials — expect 401",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"invalid.user.404\",\n  \"password\": \"incorrect-password\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 401\", function () { pm.response.to.have.status(401); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Me",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/auth/me"
-          }
-        },
-        {
-          "name": "Logout",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/api/auth/logout"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response does not expose passwordHash\", function () { if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.code !== 204) pm.expect(pm.response.text()).not.to.include(\"passwordHash\"); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -95,7 +163,18 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/boards"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Create board",
@@ -119,9 +198,8 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "if (pm.response.code === 201) {",
-                  "  pm.collectionVariables.set('boardId', pm.response.json().id);",
-                  "}"
+                  "pm.test(\"HTTP status is 201\", function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set(\"boardId\", pm.response.json().id); }"
                 ]
               }
             }
@@ -142,7 +220,18 @@
               "raw": "{\n  \"name\": \"Zmieniona tablica\",\n  \"description\": \"Opis po zmianie\"\n}"
             },
             "url": "{{baseUrl}}/api/boards/{{boardId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -150,32 +239,124 @@
       "name": "Tasks and filters",
       "item": [
         {
+          "name": "Missing task — expect 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/tasks/999999"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 404\", function () { pm.response.to.have.status(404); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Malformed JSON — expect 400",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":"
+            },
+            "url": "{{baseUrl}}/api/tasks"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Error response explains invalid JSON\", function () { pm.expect(pm.response.json().error).to.include(\"JSON\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "List tasks",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Combined filters",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?priority=high&assigneeId=1&q=API"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Invalid assigneeId — expect 400",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/boards/{{boardId}}/tasks?assigneeId=abc"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 400\", function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Task details",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/tasks/{{taskId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Create task",
@@ -189,7 +370,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Nowe zadanie z Postmana\",\n  \"description\": \"Opis testowy\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": null\n}"
+              "raw": "{\n  \"title\": \"Nowe zadanie z Postmana\",\n  \"description\": \"Opis testowy\",\n  \"status\": \"todo\",\n  \"priority\": \"medium\",\n  \"deadline\": null,\n  \"boardId\": {{boardId}},\n  \"assigneeId\": null\n}"
             },
             "url": "{{baseUrl}}/api/tasks"
           },
@@ -199,9 +380,8 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "if (pm.response.code === 201) {",
-                  "  pm.collectionVariables.set('taskId', pm.response.json().id);",
-                  "}"
+                  "pm.test(\"HTTP status is 201\", function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set(\"taskId\", pm.response.json().id); }"
                 ]
               }
             }
@@ -222,7 +402,18 @@
               "raw": "{\n  \"title\": \"x\",\n  \"boardId\": 1\n}"
             },
             "url": "{{baseUrl}}/api/tasks"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 400\", function () { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Update task",
@@ -239,14 +430,36 @@
               "raw": "{\n  \"title\": \"Zmienione zadanie\",\n  \"description\": \"Opis po zmianie\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"deadline\": null,\n  \"boardId\": 1,\n  \"assigneeId\": 1\n}"
             },
             "url": "{{baseUrl}}/api/tasks/{{taskId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Delete task",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/api/tasks/{{taskId}}"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP status is 204\", function () { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -255,13 +468,43 @@
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/api/users"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response does not expose passwordHash\", function () { if (pm.response.code >= 200 && pm.response.code < 300 && pm.response.code !== 204) pm.expect(pm.response.text()).not.to.include(\"passwordHash\"); });"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Delete board",
       "request": {
         "method": "DELETE",
         "url": "{{baseUrl}}/api/boards/{{boardId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status is 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/auth/logout"
       }
     }
   ]
