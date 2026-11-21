@@ -442,7 +442,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Zmienione zadanie\",\n  \"description\": \"Opis po zmianie\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"deadline\": null,\n  \"boardId\": {{boardId}},\n  \"assigneeId\": 1\n}"
+              "raw": "{\n  \"title\": \"Zmienione zadanie\",\n  \"description\": \"Opis po zmianie\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\",\n  \"deadline\": null,\n  \"boardId\": {{boardId}},\n  \"assigneeId\": \"{{assigneeId}}\"\n}"
             },
             "url": "{{baseUrl}}/api/tasks/{{taskId}}"
           },
@@ -520,7 +520,18 @@
       "request": {
         "method": "POST",
         "url": "{{baseUrl}}/api/auth/logout"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status is 204\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
