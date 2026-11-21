@@ -3,6 +3,7 @@
 TaskBoard to aplikacja do organizowania zadań zespołu. Użytkownik może założyć konto, zalogować się, tworzyć własne tablice, dodawać zadania, zmieniać ich status, przypisywać osoby i filtrować listę.
 
 ## Funkcje
+
 - Rejestracja i logowanie z hasłami haszowanymi przez bcrypt.
 - Sesja użytkownika i ochrona tras API.
 - Tworzenie, edycja i miękkie usuwanie tablic i zadań.
@@ -12,9 +13,11 @@ TaskBoard to aplikacja do organizowania zadań zespołu. Użytkownik może zało
 - Responsywny interfejs Bootstrap 5.3.
 
 ## Technologie
+
 HTML, CSS, JavaScript, Bootstrap 5.3, Node.js 18+, Express, express-session, bcryptjs, MySQL/MariaDB i Git.
 
 ## Struktura
+
 - frontend/ – strony HTML, style i skrypty przeglądarki.
 - backend/ – serwer Express, sesje, API i połączenie z bazą.
 - database/ – skrypty SQL, dane testowe i konta MySQL.
@@ -41,6 +44,7 @@ HTML, CSS, JavaScript, Bootstrap 5.3, Node.js 18+, Express, express-session, bcr
 Każdy użytkownik rejestruje się w TaskBoard samodzielnie — osobne konto MySQL dla każdego nie jest potrzebne. Aplikacja działa lokalnie, dopóki uruchomione są MySQL i proces Node.js.
 
 ## Testy i dokumentacja
+
 - docs/api.md – opis tras, parametrów i odpowiedzi API.
 - docs/testy.md – scenariusze testowe i checklista walidacji.
 - docs/postman/TaskBoard-TB3.postman_collection.json – kolekcja Postman dla TB-3.
