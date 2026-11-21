@@ -19,12 +19,12 @@
 - [x] Łączenie filtrów priority, assigneeId i q.
 - [x] Walidacja formularzy po stronie przeglądarki i serwera.
 - [x] Dokumentacja tras w docs/api.md.
-- [x] Co najmniej 10 scenariuszy w docs/testy.md.
+- [ ] Co najmniej 10 scenariuszy w docs/testy.md wykonano i wpisano rzeczywiste wyniki (obecnie oczekują na lokalne wykonanie).
 - [x] Instrukcja uruchomienia w README.md.
 
 ## Przed oddaniem
 
-- [ ] Uruchomić projekt lokalnie na XAMPP i sprawdzić wszystkie scenariusze z docs/testy.md.
+- [ ] Uruchomić projekt lokalnie na XAMPP i sprawdzić wszystkie scenariusze T-01–T-30 z docs/testy.md; wpisać rzeczywiste wyniki.
 - [ ] Wykonać Lighthouse i potwierdzić wynik co najmniej 90.
 - [ ] Sprawdzić wszystkie pliki HTML w walidatorze W3C.
 - [ ] Potwierdzić zielony workflow GitHub Actions.
