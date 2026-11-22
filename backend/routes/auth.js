@@ -5,7 +5,7 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 const LOGIN_PATTERN = /^[A-Za-z0-9._-]{3,30}$/;
-const EMAIL_PATTERN = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function publicUser(user) {
   return {
@@ -37,7 +37,7 @@ router.post('/register', async (req, res, next) => {
       return res.status(400).json({ error: 'Hasło musi mieć od 8 do 72 znaków.' });
     }
 
-    const [existing] = await pool.query('SELECT id FROM users WHERE login = ? OR email = ?', [login, email]);
+    const [existing] = await pool.query('SELECT id, login, email FROM users WHERE login = ? OR email = ?', [login, email]);
     if (existing.some((row) => row.login === login)) {
       return res.status(409).json({ error: 'Ten login jest już zajęty.' });
     }
