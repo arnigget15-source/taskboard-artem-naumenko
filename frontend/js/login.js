@@ -31,7 +31,7 @@
     const password = document.getElementById('regPassword');
     const repeat = document.getElementById('repeatPassword');
 
-    markInvalid(email, !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value.trim()) || email.value.trim().length > 254);
+    markInvalid(email, !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()) || email.value.trim().length > 254);
     markInvalid(login, !/^[A-Za-z0-9._-]{3,30}$/.test(login.value.trim()));
     markInvalid(firstName, !firstName.value.trim() || firstName.value.trim().length > 50);
     markInvalid(lastName, !lastName.value.trim() || lastName.value.trim().length > 50);
