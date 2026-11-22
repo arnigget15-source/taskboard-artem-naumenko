@@ -6,9 +6,10 @@ Wynik wpisuj po wykonaniu testu w lokalnym środowisku. Scenariusze mają status
 | --- | --- | --- | --- | --- |
 | T-01 | Dostęp bez logowania | Otworzyć /boards.html bez sesji | Przekierowanie na login.html | Do wykonania |
 | T-02 | Lista tablic bez sesji | GET /api/boards bez ciasteczka | 401 | Do wykonania |
-| T-03 | Rejestracja | POST /api/auth/register z poprawnymi polami | 201, sesja i dane bez passwordHash | Do wykonania |
-| T-04 | Zajęty login | Ponownie zarejestrować ten sam login | 409 | Do wykonania |
-| T-05 | Niepoprawny login | Rejestracja z loginem krótszym niż 3 znaki lub niedozwolonym znakiem | 400 | Do wykonania |
+| T-03 | Rejestracja przez stronę | Wypełnić e-mail, login, imię, nazwisko i hasło w formularzu | 201, sesja i dane bez passwordHash; przekierowanie na tablice | Do wykonania |
+| T-04 | Zajęty e-mail | Ponownie zarejestrować ten sam adres e-mail | 409 z czytelnym komunikatem | Do wykonania |
+| T-05 | Zajęty login | Ponownie zarejestrować ten sam login | 409 | Do wykonania |
+| T-06 | Niepoprawny login | Rejestracja z loginem krótszym niż 3 znaki lub niedozwolonym znakiem | 400 | Do wykonania |
 | T-06 | Zbyt krótkie hasło | Rejestracja hasłem krótszym niż 8 znaków | 400 | Do wykonania |
 | T-07 | Błędne logowanie | POST /api/auth/login z błędnym hasłem | 401 | Do wykonania |
 | T-08 | Poprawne logowanie | POST /api/auth/login z poprawnym loginem i hasłem | 200 i ciasteczko sesji | Do wykonania |
