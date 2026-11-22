@@ -5,6 +5,7 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 const LOGIN_PATTERN = /^[A-Za-z0-9._-]{3,30}$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function publicUser(user) {
   return {
@@ -17,11 +18,15 @@ function publicUser(user) {
 
 router.post('/register', async (req, res, next) => {
   try {
+    const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
     const login = typeof req.body.login === 'string' ? req.body.login.trim() : '';
     const firstName = typeof req.body.firstName === 'string' ? req.body.firstName.trim() : '';
     const lastName = typeof req.body.lastName === 'string' ? req.body.lastName.trim() : '';
     const password = typeof req.body.password === 'string' ? req.body.password : '';
 
+    if (!EMAIL_PATTERN.test(email) || email.length > 254) {
+      return res.status(400).json({ error: 'Podaj poprawny adres e-mail.' });
+    }
     if (!LOGIN_PATTERN.test(login)) {
       return res.status(400).json({ error: 'Login: 3–30 znaków, litery, cyfry, kropka, myślnik lub podkreślnik.' });
     }
@@ -32,15 +37,18 @@ router.post('/register', async (req, res, next) => {
       return res.status(400).json({ error: 'Hasło musi mieć od 8 do 72 znaków.' });
     }
 
-    const [existing] = await pool.query('SELECT id FROM users WHERE login = ?', [login]);
-    if (existing.length) {
+    const [existing] = await pool.query('SELECT id, login, email FROM users WHERE login = ? OR email = ?', [login, email]);
+    if (existing.some((row) => row.login === login)) {
       return res.status(409).json({ error: 'Ten login jest już zajęty.' });
+    }
+    if (existing.some((row) => row.email === email)) {
+      return res.status(409).json({ error: 'Ten adres e-mail jest już zarejestrowany.' });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
     const [result] = await pool.query(
-      'INSERT INTO users (login, passwordHash, firstName, lastName) VALUES (?, ?, ?, ?)',
-      [login, passwordHash, firstName, lastName]
+      'INSERT INTO users (email, login, passwordHash, firstName, lastName) VALUES (?, ?, ?, ?, ?)',
+      [email, login, passwordHash, firstName, lastName]
     );
     const user = { id: result.insertId, login, firstName, lastName };
     req.session.regenerate((err) => {
@@ -52,7 +60,7 @@ router.post('/register', async (req, res, next) => {
       });
     });
   } catch (err) {
-    if (err.code === 'ER_DUP_ENTRY') return res.status(409).json({ error: 'Ten login jest już zajęty.' });
+    if (err.code === 'ER_DUP_ENTRY') return res.status(409).json({ error: 'Login lub adres e-mail jest już zarejestrowany.' });
     next(err);
   }
 });
@@ -66,8 +74,8 @@ router.post('/login', async (req, res, next) => {
     }
 
     const [rows] = await pool.query(
-      'SELECT id, login, passwordHash, firstName, lastName FROM users WHERE login = ?',
-      [login]
+      'SELECT id, login, email, passwordHash, firstName, lastName FROM users WHERE login = ? OR email = ? LIMIT 1',
+      [login, login]
     );
     const user = rows[0];
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
