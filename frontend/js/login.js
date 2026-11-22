@@ -24,12 +24,14 @@
   const registerForm = document.getElementById('registerForm');
   registerForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const email = document.getElementById('regEmail');
     const login = document.getElementById('regLogin');
     const firstName = document.getElementById('firstName');
     const lastName = document.getElementById('lastName');
     const password = document.getElementById('regPassword');
     const repeat = document.getElementById('repeatPassword');
 
+    markInvalid(email, !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value.trim()) || email.value.trim().length > 254);
     markInvalid(login, !/^[A-Za-z0-9._-]{3,30}$/.test(login.value.trim()));
     markInvalid(firstName, !firstName.value.trim() || firstName.value.trim().length > 50);
     markInvalid(lastName, !lastName.value.trim() || lastName.value.trim().length > 50);
@@ -41,7 +43,7 @@
 
     try {
       await api('/auth/register', 'POST', {
-        login: login.value.trim(), firstName: firstName.value.trim(),
+        email: email.value.trim().toLowerCase(), login: login.value.trim(), firstName: firstName.value.trim(),
         lastName: lastName.value.trim(), password: password.value
       });
       location.href = 'boards.html';
