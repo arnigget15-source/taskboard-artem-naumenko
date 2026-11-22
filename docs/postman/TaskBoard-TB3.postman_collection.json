@@ -60,7 +60,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"Nowy\",\n  \"lastName\": \"Użytkownik\"\n}"
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\",\n  \"firstName\": \"Nowy\",\n  \"lastName\": \"Użytkownik\"\n}"
             },
             "url": "{{baseUrl}}/api/auth/register"
           },
@@ -80,7 +80,8 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.collectionVariables.set(\"login\", \"tb3.user.\" + Date.now());"
+                  "pm.collectionVariables.set(\"login\", \"tb3.user.\" + Date.now());",
+                  "pm.collectionVariables.set(\"email\", \"tb3.user.\" + Date.now() + \"@example.test\");"
                 ]
               }
             }
