@@ -1,22 +1,27 @@
--- Trzy konta MySQL dla TaskBoard.
--- Uruchom jako administrator MySQL po zaimportowaniu database/taskboard.sql.
--- Zmień hasła CHANGE_ME_* na własne silne hasła przed wykonaniem.
--- Hasła muszą być takie same jak odpowiednie wartości w lokalnym pliku .env.
+-- MySQL accounts for the TaskBoard local XAMPP database.
+-- Run as MySQL administrator AFTER importing database/taskboard.sql.
+-- taskboard_app credentials must match the root .env file.
+-- The app account is reset to the requested local password on every run.
+-- Change the CHANGE_ME passwords before using the optional admin/read-only accounts.
+
 CREATE USER IF NOT EXISTS 'taskboard_app'@'localhost'
-  IDENTIFIED BY 'CHANGE_ME_app_password';
+  IDENTIFIED BY 'TBpassword123';
+ALTER USER 'taskboard_app'@'localhost'
+  IDENTIFIED BY 'TBpassword123';
+
 CREATE USER IF NOT EXISTS 'taskboard_admin'@'localhost'
   IDENTIFIED BY 'CHANGE_ME_admin_password';
 CREATE USER IF NOT EXISTS 'taskboard_readonly'@'localhost'
   IDENTIFIED BY 'CHANGE_ME_readonly_password';
 
--- Aplikacja: bez DELETE, DROP, ALTER ani uprawnień administracyjnych.
+-- Backend needs SELECT, INSERT, UPDATE (soft delete is an UPDATE).
 GRANT SELECT, INSERT, UPDATE
   ON taskboard.* TO 'taskboard_app'@'localhost';
 
--- Administrator bazy: pełne uprawnienia wyłącznie do taskboard.
+-- Optional database administrator, restricted to this database.
 GRANT ALL PRIVILEGES
   ON taskboard.* TO 'taskboard_admin'@'localhost';
 
--- Konto tylko do odczytu.
+-- Optional read-only account.
 GRANT SELECT
   ON taskboard.* TO 'taskboard_readonly'@'localhost';

@@ -1,64 +1,55 @@
-# Baza danych
+# TaskBoard database (MySQL / MariaDB)
 
-Baza TaskBoard używa MySQL/MariaDB i kodowania `utf8mb4`.
+The schema is designed to match the current backend routes in `backend/routes/auth.js`, `users.js`, `boards.js`, and `tasks.js`.
 
-## Tabele i relacje
+## Full reset and import into XAMPP
 
-| Tabela | Przeznaczenie |
+1. Start MySQL in XAMPP and open `http://localhost/phpmyadmin/`.
+2. If you need existing data, export a backup first.
+3. Select the MySQL server (not a limited application account), open **Import**, and import `database/taskboard.sql`.
+4. The script runs `DROP DATABASE IF EXISTS taskboard`, recreates the database, creates all three tables, and inserts sample data. This is intentionally destructive for the `taskboard` database.
+5. After the database exists, run `database/konta.sql` as MySQL administrator to create/reset the app account and grant permissions.
+
+The app MySQL account is `taskboard_app`, password `TBpassword123`, database `taskboard`. This credential is for local classroom/XAMPP development only. Do not use it on an internet-facing server. If this repository is public, anyone can read it; change the password before deployment.
+
+## Tables and backend compatibility
+
+- `users`: `id`, `login`, `passwordHash`, `firstName`, `lastName`, `createdAt`. Registration inserts these exact columns; passwords are bcrypt hashes.
+- `boards`: owner, name/description, timestamps and soft-delete fields.
+- `tasks`: board, optional assignee, status (`todo`, `in_progress`, `done`), priority (`low`, `medium`, `high`), deadline and soft-delete fields.
+
+Foreign keys connect board owners/deleters and task boards/assignees/deleters to `users`. The backend soft-deletes records by setting `isDeleted=1`, `deletedAt=NOW()`, and `deletedById`; it does not physically delete them.
+
+## MySQL accounts
+
+`database/konta.sql` creates three database accounts:
+
+| Account | Permissions |
 | --- | --- |
-| `users` | Użytkownicy aplikacji, unikalny login i hash bcrypt hasła. |
-| `boards` | Tablice i ich właściciele. |
-| `tasks` | Zadania, statusy, priorytety, terminy i przypisania. |
+| `taskboard_app` | SELECT, INSERT, UPDATE on `taskboard.*` |
+| `taskboard_admin` | All privileges on `taskboard.*` |
+| `taskboard_readonly` | SELECT on `taskboard.*` |
 
-- `boards.ownerId` → `users.id` (jeden użytkownik może mieć wiele tablic).
-- `tasks.boardId` → `boards.id` (jedna tablica ma wiele zadań).
-- `tasks.assigneeId` → `users.id` (opcjonalny przypisany użytkownik).
-- `boards.deletedById` i `tasks.deletedById` → `users.id`.
+The app password is set to `TBpassword123` to match the requested local `.env`. Replace the `CHANGE_ME_...` values in `konta.sql` before using the optional admin/read-only accounts. Run the file as MySQL administrator after importing the database.
 
-## Import bazy w XAMPP
+## Environment file and random session secret
 
-1. Uruchom MySQL w XAMPP i otwórz `http://localhost/phpmyadmin/`.
-2. Przed importem wykonaj kopię zapasową, jeśli chcesz zachować obecne dane.
-3. Zaimportuj `database/taskboard.sql`. Skrypt zaczyna się od `DROP DATABASE IF EXISTS taskboard`, więc usuwa całą istniejącą bazę `taskboard`, tworzy ją od nowa, a następnie dodaje tabele i dane testowe.
-4. Skrypt dodaje 10 zadań, w tym dwa miękko usunięte. Zadanie 9 ma `deletedAt` sprzed 45 dni, a zadanie 10 ma bieżącą datę.
+The real `.env` file belongs in the project root and is ignored by Git. To create it with a fresh random session secret, run this from the project root:
 
-## Konta MySQL i uprawnienia
+```bash
+node backend/create-env.js
+```
 
-Plik `database/konta.sql` dodaje użytkowników APLIKACJI do tabeli `users`. To nie są konta logowania do serwera MySQL.
+The script creates `.env` from `.env.example`, generates a cryptographically random `SESSION_SECRET`, and refuses to overwrite an existing `.env`. The template sets `DB_USER=taskboard_app`, `DB_PASSWORD=TBpassword123`, and `DB_NAME=taskboard`.
 
-Osobne konta serwera MySQL tworzy `database/db_users.sql`:
+Keep `.env` private; never commit it or share its contents.
 
-| Konto MySQL | Uprawnienia |
-| --- | --- |
-| `taskboard_app` | SELECT, INSERT, UPDATE, DELETE na `taskboard.*` |
-| `taskboard_admin` | Wszystkie uprawnienia do `taskboard.*` |
-| `taskboard_readonly` | Tylko SELECT na `taskboard.*` |
+## Sample data and verification
 
-Przed uruchomieniem `db_users.sql` zmień trzy hasła `CHANGE_ME_...` na własne, unikalne hasła. Następnie wykonaj ten plik w phpMyAdmin jako administrator MySQL (np. `root`). Skrypt musi być uruchomiony po utworzeniu bazy `taskboard`. Uprawnienia administratora są ograniczone do tej jednej bazy.
+The import creates 5 sample app users, 2 boards, and 10 tasks (8 active and 2 soft-deleted). Task 9 has a deletion timestamp 45 days in the past; task 10 has a current deletion timestamp.
 
-## Konfiguracja Backend
+Run `database/queries.sql` to inspect common queries. Expected row counts immediately after import:
 
-1. Skopiuj główny plik `.env.example` do pliku `.env` w katalogu głównym projektu.
-2. W `.env` ustaw `DB_USER=taskboard_app` oraz `DB_PASSWORD` na dokładnie to samo hasło, które ustawiłeś dla `taskboard_app` w `database/db_users.sql`.
-3. Pozostaw `DB_HOST=localhost`, `DB_PORT=3306` i `DB_NAME=taskboard`, jeśli XAMPP używa ustawień domyślnych.
-4. Plik `.env` jest wykluczony z Git i nie może być wysyłany do GitHuba. Nie umieszczaj prawdziwych haseł w repozytorium.
-
-`backend/db.js` ma lokalne wartości domyślne dla XAMPP, ale zalecana konfiguracja projektu to dedykowane konto `taskboard_app` zapisane w lokalnym `.env`.
-
-## Soft delete
-
-Rekord nie jest fizycznie kasowany. Przy usunięciu ustawiane są
-`isDeleted = 1` i `deletedAt = NOW()`. Aktywne listy filtrują
-`isDeleted = 0`. W API TB-2 `deletedById` pozostaje `NULL`.
-
-## Kopia zapasowa i test odtworzenia
-
-Kopia zapasowa znajduje się w `database/backup/taskboard.sql`. Do testu odtworzenia utwórz osobną bazę `taskboard_test`, zmień nazwę bazy w kopii z `taskboard` na `taskboard_test`, zaimportuj ją i porównaj liczbę rekordów w trzech tabelach. Nie uruchamiaj skryptu `taskboard.sql` na danych, których nie chcesz utracić.
-
-Oczekiwana liczba rekordów po imporcie przykładowego skryptu:
-
-- `users`: 5;
-- `boards`: 2;
-- `tasks`: 10 (w tym 2 miękko usunięte).
-
-Dokładny wynik importu i połączenia trzeba sprawdzić lokalnie w phpMyAdmin/XAMPP.
+- `users`: 5
+- `boards`: 2
+- `tasks`: 10
