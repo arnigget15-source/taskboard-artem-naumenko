@@ -39,7 +39,7 @@ The built-in express-session memory store is for local development only. Product
 - POST `/api/auth/register`, POST `/api/auth/login`, GET `/api/auth/me`, POST `/api/auth/logout`.
 - GET/POST `/api/boards`, PUT/DELETE `/api/boards/:id`.
 - GET `/api/boards/:boardId/tasks` with filters `priority`, `assigneeId`, and `q`.
-- GET `/api/tasks/:id`, POST `/api/tasks/:id`, PUT/DELETE `/api/tasks/:id`.
+- GET/POST `/api/tasks`, GET `/api/tasks/:id`, PUT/DELETE `/api/tasks/:id`.
 - GET `/api/users` returns users without `passwordHash`.
 
 ## Syntax check
