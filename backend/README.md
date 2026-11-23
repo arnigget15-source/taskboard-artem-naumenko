@@ -1,29 +1,47 @@
 # Backend
 
-Backend TaskBoard działa na Node.js i Express. Udostępnia API, łączy się z MySQL/MariaDB przez mysql2, a logowanie i rejestracja korzystają z bcryptjs oraz sesji express-session.
+TaskBoard uses Node.js, Express, MySQL/MariaDB, bcryptjs, and express-session.
 
-## Instalacja i uruchomienie
+## Local setup with XAMPP
 
-1. Uruchom MySQL w XAMPP i przygotuj bazę zgodnie z database/README.md.
-2. W katalogu głównym skopiuj .env.example do .env i wpisz własne dane połączenia oraz długi losowy SESSION_SECRET.
-3. W terminalu przejdź do backend/ i wykonaj npm install.
-4. Uruchom npm start.
-5. Otwórz `http://localhost:3000/`.
+1. Start MySQL in XAMPP.
+2. Import `database/taskboard.sql` into phpMyAdmin as a MySQL administrator. It drops and recreates the `taskboard` database.
+3. Run `database/konta.sql` as MySQL administrator. The backend account is `taskboard_app` with local password `TBpassword123`.
+4. From the project root, create a local environment file and random session secret:
 
-## Bezpieczeństwo
+   ```bash
+   node backend/create-env.js
+   ```
 
-Hasła są przechowywane wyłącznie jako hash bcrypt. Identyfikator użytkownika jest przechowywany w sesji, a ciasteczko sesji ma ustawienia httpOnly i sameSite=lax. Wszystkie trasy /api/users, /api/boards i /api/tasks wymagają zalogowania. Operacje na tablicach i zadaniach sprawdzają właściciela tablicy.
+   The script creates `.env` only if it does not already exist. It will not overwrite existing settings.
+5. In a terminal, run:
 
-Wbudowany magazyn sesji Express służy do lokalnego developmentu; przed wdrożeniem produkcyjnym należy skonfigurować trwały magazyn sesji i HTTPS.
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
 
-## Trasy
+6. Open `http://localhost:3000/`.
 
-- POST /api/auth/register, POST /api/auth/login, GET /api/auth/me, POST /api/auth/logout.
-- GET/POST /api/boards, PUT/DELETE /api/boards/:id.
-- GET /api/boards/:boardId/tasks z filtrami priority, assigneeId i q.
-- GET /api/tasks/:id, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id.
-- GET /api/users – lista użytkowników bez passwordHash.
+## Environment
 
-## Sprawdzenie składni
+The project-root `.env` must use `DB_HOST=localhost`, `DB_PORT=3306`, `DB_USER=taskboard_app`, `DB_PASSWORD=TBpassword123`, and `DB_NAME=taskboard` for the supplied local SQL setup. The `.env` file is ignored by Git. Do not commit it or use the classroom database password in production.
 
-W katalogu backend/ wykonaj npm run check.
+## Security
+
+Application passwords are stored as bcrypt hashes. Session IDs are stored in httpOnly, sameSite=lax cookies. Routes under `/api/users`, `/api/boards`, and `/api/tasks` require authentication. Board/task operations check board ownership.
+
+The built-in express-session memory store is for local development only. Production requires a persistent session store and HTTPS.
+
+## Routes
+
+- POST `/api/auth/register`, POST `/api/auth/login`, GET `/api/auth/me`, POST `/api/auth/logout`.
+- GET/POST `/api/boards`, PUT/DELETE `/api/boards/:id`.
+- GET `/api/boards/:boardId/tasks` with filters `priority`, `assigneeId`, and `q`.
+- GET `/api/tasks/:id`, POST `/api/tasks/:id`, PUT/DELETE `/api/tasks/:id`.
+- GET `/api/users` returns users without `passwordHash`.
+
+## Syntax check
+
+From `backend/`, run `npm run check`.
